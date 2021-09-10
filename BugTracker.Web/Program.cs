@@ -1,3 +1,5 @@
+using BugTracker.Dal;
+using BugTracker.Web.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 namespace BugTracker.Web {
     public class Program {
         public static void Main(string[] args) {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args).Build().MigrateDatabase<BugTrackerDbContext>().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
