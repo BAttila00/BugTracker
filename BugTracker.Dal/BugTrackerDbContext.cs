@@ -1,11 +1,13 @@
 ﻿using BugTracker.Dal.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BugTracker.Dal {
-    public class BugTrackerDbContext : DbContext {
+    public class BugTrackerDbContext : IdentityDbContext<User, IdentityRole<int>, int> {
         public BugTrackerDbContext() {
 
         }
@@ -17,13 +19,16 @@ namespace BugTracker.Dal {
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
-        public virtual DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
+            base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ProjectUser>(entity => {
+
+                entity.ToTable("User");
+
                 entity.HasKey(e => new { e.UserId, e.ProjectId });
 
                 entity.HasOne(d => d.Project)
