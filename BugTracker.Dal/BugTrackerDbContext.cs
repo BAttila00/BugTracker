@@ -25,9 +25,13 @@ namespace BugTracker.Dal {
 
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ProjectUser>(entity => {
+            modelBuilder.Entity<User>(entity => {
 
-                entity.ToTable("User");
+                entity.ToTable("Users");
+
+            });
+
+            modelBuilder.Entity<ProjectUser>(entity => {
 
                 entity.HasKey(e => new { e.UserId, e.ProjectId });
 
