@@ -1,8 +1,10 @@
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using BugTracker.Web.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +31,9 @@ namespace BugTracker.Web {
             services.AddIdentity<User, IdentityRole<int>>()
                 .AddEntityFrameworkStores<BugTrackerDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));  //A MailSettings.cs fájlba felolvassa a appsettings.Development.json-ben a MailSettings section alatt beállított értékeket
+            services.AddTransient<IEmailSender, Services.EmailSender>();
 
             services.AddRazorPages();
         }
