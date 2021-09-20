@@ -28,7 +28,9 @@ namespace BugTracker.Web {
                 option => option.UseSqlServer(Configuration.GetConnectionString("BookShopDbContext"))
             );
 
-            services.AddIdentity<User, IdentityRole<int>>()
+            services.AddIdentity<User, IdentityRole<int>>(opt => {
+                opt.SignIn.RequireConfirmedEmail = true;
+            })
                 .AddEntityFrameworkStores<BugTrackerDbContext>()
                 .AddDefaultTokenProviders();
 
