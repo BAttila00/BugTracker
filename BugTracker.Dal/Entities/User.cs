@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BugTracker.Dal.Entities {
@@ -13,5 +14,15 @@ namespace BugTracker.Dal.Entities {
 
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
+
+        [InverseProperty("Creator")]
+        public virtual ICollection<Issue> CreatedIssues { get; set; }
+
+        [InverseProperty("AssignedTo")]
+        public virtual ICollection<Issue> Issues { get; set; }
+
+        [InverseProperty("Creator")]
+        public virtual ICollection<Project> CreatedProjects { get; set; }
+
     }
 }

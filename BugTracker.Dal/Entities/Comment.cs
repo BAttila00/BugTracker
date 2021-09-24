@@ -9,5 +9,10 @@ namespace BugTracker.Dal.Entities {
 
 
         public virtual User User { get; set; }
+
+        public string Text { get; set; }
+        public int IssueId { get; set; }
+        public virtual Issue Issue { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }
