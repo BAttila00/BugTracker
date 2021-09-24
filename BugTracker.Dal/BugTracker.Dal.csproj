@@ -5,8 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210910180445_KezdetiAdatb.cs" />
+    <Compile Remove="Migrations\20210910180445_KezdetiAdatb.Designer.cs" />
+    <Compile Remove="Migrations\20210911184253_SomeTables.cs" />
+    <Compile Remove="Migrations\20210911184253_SomeTables.Designer.cs" />
+    <Compile Remove="Migrations\20210913171113_UserIdentity.cs" />
+    <Compile Remove="Migrations\20210913171113_UserIdentity.Designer.cs" />
     <Compile Remove="Migrations\20210924154324_UpdatedTables.cs" />
     <Compile Remove="Migrations\20210924154324_UpdatedTables.Designer.cs" />
+    <Compile Remove="Migrations\20210924160324_UpdatedTables.cs" />
+    <Compile Remove="Migrations\20210924160324_UpdatedTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +31,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

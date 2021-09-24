@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BugTracker.Dal.Migrations
 {
     [DbContext(typeof(BugTrackerDbContext))]
-    [Migration("20210913171113_UserIdentity")]
-    partial class UserIdentity
+    [Migration("20210924164945_UjKezdetiMigracio")]
+    partial class UjKezdetiMigracio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.12")
+                .HasAnnotation("ProductVersion", "3.1.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,14 +28,78 @@ namespace BugTracker.Dal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("UserId")
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IssueId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IssueId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("BugTracker.Dal.Entities.Issue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AssignedToId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descreption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IssuePriority")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IssueSeverity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IssueStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SolvedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedToId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Issue");
                 });
 
             modelBuilder.Entity("BugTracker.Dal.Entities.Project", b =>
@@ -45,7 +109,35 @@ namespace BugTracker.Dal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PlannedFinishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProjectDescreption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("ModifiedById");
 
                     b.ToTable("Projects");
                 });
@@ -264,11 +356,48 @@ namespace BugTracker.Dal.Migrations
 
             modelBuilder.Entity("BugTracker.Dal.Entities.Comment", b =>
                 {
+                    b.HasOne("BugTracker.Dal.Entities.Issue", "Issue")
+                        .WithMany("Comments")
+                        .HasForeignKey("IssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BugTracker.Dal.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Comment_User")
+                        .HasConstraintName("FK_Comment_User");
+                });
+
+            modelBuilder.Entity("BugTracker.Dal.Entities.Issue", b =>
+                {
+                    b.HasOne("BugTracker.Dal.Entities.User", "AssignedTo")
+                        .WithMany("Issues")
+                        .HasForeignKey("AssignedToId");
+
+                    b.HasOne("BugTracker.Dal.Entities.User", "Creator")
+                        .WithMany("CreatedIssues")
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("BugTracker.Dal.Entities.User", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById");
+
+                    b.HasOne("BugTracker.Dal.Entities.Project", "Project")
+                        .WithMany("Issues")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BugTracker.Dal.Entities.Project", b =>
+                {
+                    b.HasOne("BugTracker.Dal.Entities.User", "Creator")
+                        .WithMany("CreatedProjects")
+                        .HasForeignKey("CreatorId");
+
+                    b.HasOne("BugTracker.Dal.Entities.User", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById");
                 });
 
             modelBuilder.Entity("BugTracker.Dal.Entities.ProjectUser", b =>

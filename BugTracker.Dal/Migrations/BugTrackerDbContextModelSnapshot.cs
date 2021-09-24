@@ -35,7 +35,7 @@ namespace BugTracker.Dal.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -54,13 +54,13 @@ namespace BugTracker.Dal.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AssignedToId")
+                    b.Property<int?>("AssignedToId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatorId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Descreption")
@@ -75,7 +75,7 @@ namespace BugTracker.Dal.Migrations
                     b.Property<int>("IssueStatus")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModifiedById")
+                    b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedOn")
@@ -110,10 +110,10 @@ namespace BugTracker.Dal.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatorId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ModifiedById")
+                    b.Property<int?>("ModifiedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ModifiedOn")
@@ -363,29 +363,22 @@ namespace BugTracker.Dal.Migrations
                     b.HasOne("BugTracker.Dal.Entities.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Comment_User")
-                        .IsRequired();
+                        .HasConstraintName("FK_Comment_User");
                 });
 
             modelBuilder.Entity("BugTracker.Dal.Entities.Issue", b =>
                 {
                     b.HasOne("BugTracker.Dal.Entities.User", "AssignedTo")
                         .WithMany("Issues")
-                        .HasForeignKey("AssignedToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AssignedToId");
 
                     b.HasOne("BugTracker.Dal.Entities.User", "Creator")
                         .WithMany("CreatedIssues")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatorId");
 
                     b.HasOne("BugTracker.Dal.Entities.User", "ModifiedBy")
                         .WithMany()
-                        .HasForeignKey("ModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModifiedById");
 
                     b.HasOne("BugTracker.Dal.Entities.Project", "Project")
                         .WithMany("Issues")
@@ -398,15 +391,11 @@ namespace BugTracker.Dal.Migrations
                 {
                     b.HasOne("BugTracker.Dal.Entities.User", "Creator")
                         .WithMany("CreatedProjects")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreatorId");
 
                     b.HasOne("BugTracker.Dal.Entities.User", "ModifiedBy")
                         .WithMany()
-                        .HasForeignKey("ModifiedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ModifiedById");
                 });
 
             modelBuilder.Entity("BugTracker.Dal.Entities.ProjectUser", b =>
