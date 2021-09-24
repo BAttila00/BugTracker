@@ -7,13 +7,13 @@ namespace BugTracker.Dal.Entities {
     public class Issue {
         public int Id { get; set; }
         public string Descreption { get; set; }
-        public int CreatorId { get; set; }
+        public int? CreatorId { get; set; }
 
         [ForeignKey("CreatorId")]
         public virtual User Creator { get; set; }
         public IssueStatus IssueStatus { get; set; }
         public DateTime CreationDate { get; set; }
-        public int AssignedToId { get; set; }
+        public int? AssignedToId { get; set; }
 
         [ForeignKey("AssignedToId")]
         public virtual User AssignedTo { get; set; }
@@ -22,7 +22,7 @@ namespace BugTracker.Dal.Entities {
         public IssuePriority IssuePriority { get; set; }
         public IssueSeverity IssueSeverity { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public int ModifiedById { get; set; }
+        public int? ModifiedById { get; set; }
 
         [ForeignKey("ModifiedById")]
         public virtual User ModifiedBy { get; set; }

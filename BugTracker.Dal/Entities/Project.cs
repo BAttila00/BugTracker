@@ -11,7 +11,7 @@ namespace BugTracker.Dal.Entities {
         public int Id { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime PlannedFinishDate { get; set; }
-        public int CreatorId { get; set; }
+        public int? CreatorId { get; set; }
 
         [ForeignKey("CreatorId")]
         public virtual User Creator { get; set; }
@@ -19,7 +19,7 @@ namespace BugTracker.Dal.Entities {
         public string ProjectDescreption { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public int ModifiedById { get; set; }
+        public int? ModifiedById { get; set; }
 
         [ForeignKey("ModifiedById")]
         public virtual User ModifiedBy { get; set; }
