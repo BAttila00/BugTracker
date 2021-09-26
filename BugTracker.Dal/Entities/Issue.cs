@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace BugTracker.Dal.Entities {
     public class Issue {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Kérjük adja meg a hiba leírását")]
         public string Descreption { get; set; }
         public int? CreatorId { get; set; }
 

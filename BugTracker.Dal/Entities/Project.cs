@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
@@ -15,6 +16,8 @@ namespace BugTracker.Dal.Entities {
 
         [ForeignKey("CreatorId")]
         public virtual User Creator { get; set; }
+
+        [Required(ErrorMessage = "Kérjük adja meg a project nevét")]
         public string ProjectName { get; set; }
         public string ProjectDescreption { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
