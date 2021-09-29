@@ -1,4 +1,5 @@
 ﻿using BugTracker.Dal.Entities;
+using BugTracker.Dal.EntityConfiguration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,9 @@ namespace BugTracker.Dal {
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Comment_User");
             });
+
+            modelBuilder.ApplyConfiguration(new ProjectEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new IssueEntityConfiguration());
         }
     }
 }
