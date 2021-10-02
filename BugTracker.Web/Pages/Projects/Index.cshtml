@@ -1,0 +1,78 @@
+﻿@page
+@model BugTracker.Web.Pages.Projects.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].CreationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].PlannedFinishDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].Creator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].ProjectDescreption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].ProjectStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].ModifiedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project[0].ModifiedBy)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Project) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlannedFinishDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectDescreption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedBy.Id)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

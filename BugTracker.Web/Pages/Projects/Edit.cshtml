@@ -1,0 +1,70 @@
+﻿@page
+@model BugTracker.Web.Pages.Projects.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Project</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Project.Id" />
+            <div class="form-group">
+                <label asp-for="Project.CreationDate" class="control-label"></label>
+                <input asp-for="Project.CreationDate" class="form-control" />
+                <span asp-validation-for="Project.CreationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.PlannedFinishDate" class="control-label"></label>
+                <input asp-for="Project.PlannedFinishDate" class="form-control" />
+                <span asp-validation-for="Project.PlannedFinishDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.CreatorId" class="control-label"></label>
+                <select asp-for="Project.CreatorId" class="form-control" asp-items="ViewBag.CreatorId"></select>
+                <span asp-validation-for="Project.CreatorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectName" class="control-label"></label>
+                <input asp-for="Project.ProjectName" class="form-control" />
+                <span asp-validation-for="Project.ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectDescreption" class="control-label"></label>
+                <input asp-for="Project.ProjectDescreption" class="form-control" />
+                <span asp-validation-for="Project.ProjectDescreption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ProjectStatus" class="control-label"></label>
+                <select asp-for="Project.ProjectStatus" class="form-control"></select>
+                <span asp-validation-for="Project.ProjectStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ModifiedOn" class="control-label"></label>
+                <input asp-for="Project.ModifiedOn" class="form-control" />
+                <span asp-validation-for="Project.ModifiedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Project.ModifiedById" class="control-label"></label>
+                <select asp-for="Project.ModifiedById" class="form-control" asp-items="ViewBag.ModifiedById"></select>
+                <span asp-validation-for="Project.ModifiedById" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
