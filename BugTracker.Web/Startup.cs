@@ -37,7 +37,11 @@ namespace BugTracker.Web {
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));  //A MailSettings.cs fájlba felolvassa a appsettings.Development.json-ben a MailSettings section alatt beállított értékeket
             services.AddTransient<IEmailSender, Services.EmailSender>();
 
-            services.AddRazorPages();
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Projects");       //Ne lehessen elérni /Projects mappát csak ha be vagyunk jelentkezve.
+                options.Conventions.AuthorizeFolder("/Issues");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
