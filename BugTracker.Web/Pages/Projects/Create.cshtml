@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Project.ProjectStatus" class="control-label"></label>
-                <select asp-for="Project.ProjectStatus" class="form-control"></select>
+                <select asp-for="Project.ProjectStatus" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.ProjectStatus>()"></select>
                 <span asp-validation-for="Project.ProjectStatus" class="text-danger"></span>
             </div>
             <div class="form-group">

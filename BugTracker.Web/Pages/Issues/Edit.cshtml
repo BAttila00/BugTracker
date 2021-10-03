@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Issue.IssueStatus" class="control-label"></label>
-                <select asp-for="Issue.IssueStatus" class="form-control"></select>
+                <select asp-for="Issue.IssueStatus" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueStatus>()"></select>
                 <span asp-validation-for="Issue.IssueStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,12 +46,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Issue.IssuePriority" class="control-label"></label>
-                <select asp-for="Issue.IssuePriority" class="form-control"></select>
+                <select asp-for="Issue.IssuePriority" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssuePriority>()"></select>
                 <span asp-validation-for="Issue.IssuePriority" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Issue.IssueSeverity" class="control-label"></label>
-                <select asp-for="Issue.IssueSeverity" class="form-control"></select>
+                <select asp-for="Issue.IssueSeverity" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueSeverity>()"></select>
                 <span asp-validation-for="Issue.IssueSeverity" class="text-danger"></span>
             </div>
             <div class="form-group">
