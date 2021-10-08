@@ -39,7 +39,7 @@ namespace BugTracker.Web.Pages.Projects {
             //Ha nem admin van bejelentkezve ne látszódjon az összes projekt még akkor se ha http://localhost:...portNumber.../Projects/ oldalra navigálunk manuálisan (átirányít)
             var roles = await _userManager.GetRolesAsync(applicationUser);
             if (!roles.Contains("Administrators") && !myProjects) {
-                return RedirectToPage("/Index", new { myProjects = true });
+                return RedirectToAction("/Index", new { myProjects = true });
                 //vagy
                 //return RedirectToAction("Index", new { myProjects = true });
                 //vagy
