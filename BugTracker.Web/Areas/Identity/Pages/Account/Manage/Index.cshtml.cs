@@ -31,6 +31,8 @@ namespace BugTracker.Web.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        public string UserRoles { get; set; }
+
         public class InputModel
         {
             [Phone]
@@ -60,6 +62,8 @@ namespace BugTracker.Web.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            UserRoles = string.Join(", ", roles);
             return Page();
         }
 
