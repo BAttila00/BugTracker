@@ -85,6 +85,11 @@
                 <span asp-validation-for="User.AccessFailedCount" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">User Roles: </label>
+                <label class="control-label">@Model.UserRoles</label>
+                <a asp-page="./ManageRoles" asp-route-id="@Model.User.Id">Edit roles</a>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

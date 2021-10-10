@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Dal.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,14 +14,18 @@ namespace BugTracker.Web.Pages.Users
     public class EditModel : PageModel
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(BugTracker.Dal.BugTrackerDbContext context)
+        public EditModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
         public User User { get; set; }
+
+        public string UserRoles { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,6 +40,10 @@ namespace BugTracker.Web.Pages.Users
             {
                 return NotFound();
             }
+
+            var roles = await _userManager.GetRolesAsync(User);
+            UserRoles = string.Join(", ", roles);
+
             return Page();
         }
 

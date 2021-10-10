@@ -25,8 +25,4 @@
     <ProjectReference Include="..\BugTracker.Dal\BugTracker.Dal.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Users\" />
-  </ItemGroup>
-
 </Project>
