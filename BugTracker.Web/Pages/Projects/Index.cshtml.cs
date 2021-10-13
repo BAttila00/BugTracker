@@ -33,6 +33,7 @@ namespace BugTracker.Web.Pages.Projects {
         public bool myProjects { get; set; }
 
         public async Task<IActionResult> OnGetAsync() {
+            ViewData["myProjects"] = myProjects;
             Project = await _context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.ModifiedBy).ToListAsync();
