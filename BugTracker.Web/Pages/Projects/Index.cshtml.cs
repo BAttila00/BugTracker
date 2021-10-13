@@ -10,6 +10,7 @@ using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
+using BugTracker.Web.SearchModels;
 
 namespace BugTracker.Web.Pages.Projects {
     public class IndexModel : PageModel {
@@ -25,7 +26,13 @@ namespace BugTracker.Web.Pages.Projects {
 
         public IList<ProjectUser> ProjectUser { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(bool myProjects = false) {
+        [BindProperty(SupportsGet = true)]
+        public ProjectSearchModel ProjectSearch { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool myProjects { get; set; }
+
+        public async Task<IActionResult> OnGetAsync() {
             Project = await _context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.ModifiedBy).ToListAsync();
@@ -38,22 +45,34 @@ namespace BugTracker.Web.Pages.Projects {
 
             //Ha nem admin van bejelentkezve ne látszódjon az összes projekt még akkor se ha http://localhost:...portNumber.../Projects/ oldalra navigálunk manuálisan (átirányít)
             var roles = await _userManager.GetRolesAsync(applicationUser);
-            if (!roles.Contains("Administrators") && !myProjects) {
-                return RedirectToAction("/Index", new { myProjects = true });
-                //vagy
-                //return RedirectToAction("Index", new { myProjects = true });
-                //vagy
-                //return RedirectToPage("/Projects/Index", new { myProjects = true });
+            //if (!roles.Contains("Administrators") && !myProjects) {
+            //    return RedirectToAction("/Index", new { myProjects = true});
+            //    //vagy
+            //    //return RedirectToAction("Index", new { myProjects = true });
+            //    //vagy
+            //    //return RedirectToPage("/Projects/Index", new { myProjects = true });
+            //}
+
+            if ((!roles.Contains("Administrators") && !myProjects) || myProjects) {
+                var myProjectIds = ProjectUser.Where(p => p.UserId == applicationUser.Id).Select(p => p.ProjectId).Distinct().ToList();
+                Project = Project.Where(p => myProjectIds.Contains(p.Id)).ToList();
             }
 
             //A saját projektek megjelenítése
             //http://localhost:...portNumber.../Projects/?myProjects=true
-            if (myProjects) {
+            //if (myProjects) {
 
-                var myProjectIds = ProjectUser.Where(p => p.UserId == applicationUser.Id).Select(p => p.ProjectId).Distinct().ToList();
+            //    var myProjectIds = ProjectUser.Where(p => p.UserId == applicationUser.Id).Select(p => p.ProjectId).Distinct().ToList();
 
-                Project = Project.Where(p => myProjectIds.Contains(p.Id)).ToList();
-            }
+            //    Project = Project.Where(p => myProjectIds.Contains(p.Id)).ToList();
+            //}
+
+            //Searching
+            if (ProjectSearch.ProjectName != null)
+                Project = Project.Where(a => a.ProjectName.ToLower().Equals(ProjectSearch.ProjectName.ToLower())).ToList();
+
+            if (ProjectSearch.ProjectDescreption != null)
+                Project = Project.Where(a => a.ProjectDescreption.ToLower().Equals(ProjectSearch.ProjectDescreption.ToLower())).ToList();
 
             return Page();
         }
