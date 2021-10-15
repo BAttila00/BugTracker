@@ -75,6 +75,10 @@ namespace BugTracker.Web.Pages.Projects {
             if (ProjectSearch.ProjectDescreption != null)
                 Project = Project.Where(a => a.ProjectDescreption.ToLower().Equals(ProjectSearch.ProjectDescreption.ToLower())).ToList();
 
+            if (ProjectSearch.ProjectStatus != -1)
+                Project = Project.Where(a => (int)a.ProjectStatus == ProjectSearch.ProjectStatus).ToList();
+
+
             return Page();
         }
     }
