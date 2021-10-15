@@ -8,24 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
+using BugTracker.Web.SearchModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BugTracker.Web.Pages.Issues
-{
-    public class IndexModel : PageModel
-    {
+namespace BugTracker.Web.Pages.Issues {
+    public class IndexModel : PageModel {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
         private readonly UserManager<User> _userManager;
 
-        public IndexModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager)
-        {
+        public IndexModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager) {
             _context = context;
             _userManager = userManager;
         }
 
-        public IList<Issue> Issue { get;set; }
+        public IList<Issue> Issue { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(bool myIssues = false)
-        {
+        [BindProperty(SupportsGet = true)]
+        public IssueSearchModel IssueSearch { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public bool myIssues { get; set; }
+
+        public async Task<IActionResult> OnGetAsync() {
+            ViewData["myIssues"] = myIssues;
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
                 .Include(i => i.Creator)
@@ -39,6 +44,16 @@ namespace BugTracker.Web.Pages.Issues
             if ((!roles.Contains("Administrators") && !myIssues) || myIssues) {
                 Issue = Issue.Where(i => i.AssignedToId == applicationUser.Id).ToList();
             }
+
+            ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
+            //Searching
+            if (IssueSearch.Descreption != null)
+                Issue = Issue.Where(a => a.Descreption.ToLower().Equals(IssueSearch.Descreption.ToLower())).ToList();
+            if (IssueSearch.AssignedToId != -1)
+                Issue = Issue.Where(a => a.AssignedToId == IssueSearch.AssignedToId).ToList();
+            if (IssueSearch.ProjectId != -1)
+                Issue = Issue.Where(a => a.ProjectId == IssueSearch.ProjectId).ToList();
 
             return Page();
         }
