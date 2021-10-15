@@ -36,11 +36,7 @@ namespace BugTracker.Web.Pages.Issues
 
             //Ha nem admin van bejelentkezve ne látszódjon az összes issue még akkor se ha http://localhost:...portNumber.../Issues/ oldalra navigálunk manuálisan (átirányít)
             var roles = await _userManager.GetRolesAsync(applicationUser);
-            if (!roles.Contains("Administrators") && !myIssues) {
-                return RedirectToAction("/Index", new { myIssues = true });
-            }
-
-            if (myIssues) {
+            if ((!roles.Contains("Administrators") && !myIssues) || myIssues) {
                 Issue = Issue.Where(i => i.AssignedToId == applicationUser.Id).ToList();
             }
 
