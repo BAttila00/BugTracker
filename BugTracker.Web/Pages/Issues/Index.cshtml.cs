@@ -45,7 +45,7 @@ namespace BugTracker.Web.Pages.Issues {
                 Issue = Issue.Where(i => i.AssignedToId == applicationUser.Id).ToList();
             }
 
-            ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["UsersWithUserName"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
             //Searching
             if (IssueSearch.Descreption != null)
@@ -54,6 +54,14 @@ namespace BugTracker.Web.Pages.Issues {
                 Issue = Issue.Where(a => a.AssignedToId == IssueSearch.AssignedToId).ToList();
             if (IssueSearch.ProjectId != -1)
                 Issue = Issue.Where(a => a.ProjectId == IssueSearch.ProjectId).ToList();
+            if (IssueSearch.CreatorId != -1)
+                Issue = Issue.Where(a => a.AssignedToId == IssueSearch.CreatorId).ToList();
+            if (IssueSearch.IssueStatus != -1)
+                Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssueStatus).ToList();
+            if (IssueSearch.IssueSeverity != -1)
+                Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssueSeverity).ToList();
+            if (IssueSearch.IssuePriority != -1)
+                Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssuePriority).ToList();
 
             return Page();
         }

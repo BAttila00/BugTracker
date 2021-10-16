@@ -24,7 +24,17 @@
                     <label class="col-xs-12">Assigned to</label>
                     <div class="col-xs-12 col-md-12">
                         <div class="input-group">
-                            <select asp-for="IssueSearch.AssignedToId" class="form-control" asp-items="ViewBag.AssignedToId">
+                            <select asp-for="IssueSearch.AssignedToId" class="form-control" asp-items="ViewBag.UsersWithUserName">
+                                <option value="-1">All</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-12">Creator</label>
+                    <div class="col-xs-12 col-md-12">
+                        <div class="input-group">
+                            <select asp-for="IssueSearch.CreatorId" class="form-control" asp-items="ViewBag.UsersWithUserName">
                                 <option value="-1">All</option>
                             </select>
                         </div>
@@ -35,6 +45,36 @@
                     <div class="col-xs-12 col-md-12">
                         <div class="input-group">
                             <select asp-for="IssueSearch.ProjectId" class="form-control" asp-items="ViewBag.ProjectId">
+                                <option value="-1">All</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-12">Issue Status</label>
+                    <div class="col-xs-12 col-md-12">
+                        <div class="input-group">
+                            <select asp-for="IssueSearch.IssueStatus" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueStatus>()">
+                                <option value="-1">All</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-12">Issue Severity</label>
+                    <div class="col-xs-12 col-md-12">
+                        <div class="input-group">
+                            <select asp-for="IssueSearch.IssueSeverity" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueSeverity>()">
+                                <option value="-1">All</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xs-12">Issue Priority</label>
+                    <div class="col-xs-12 col-md-12">
+                        <div class="input-group">
+                            <select asp-for="IssueSearch.IssuePriority" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssuePriority>()">
                                 <option value="-1">All</option>
                             </select>
                         </div>
