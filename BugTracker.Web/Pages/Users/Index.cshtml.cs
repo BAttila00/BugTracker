@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BugTracker.Dal.Entities;
+using BugTracker.Dal.UserRoles;
 using BugTracker.Web.SearchModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -37,11 +38,27 @@ namespace BugTracker.Web.Pages.Users
                 User = User.Where(a => a.EmailConfirmed).ToList();
             else if (UserSearch.EmailConfirmedString.Equals("No"))
                 User = User.Where(a => !a.EmailConfirmed).ToList();
+            if (UserSearch.Role != -1) {
+                List<User> usersWithRole = new List<User>();
+                foreach (User user in User) {
+                    if (await HasRoleAsync(user, UserSearch.Role))
+                        usersWithRole.Add(user);
+                }
+                User = usersWithRole;
+            }
         }
 
         public async Task<string> GetUserRoles(User user) {
             var roles =  await _userManager.GetRolesAsync(user);
             return string.Join(", ", roles);
+        }
+
+        public async Task<bool> HasRoleAsync(User user, int role) {
+            var roles = await _userManager.GetRolesAsync(user);
+            Roles roleEnum = (Roles)role;
+            if (roles.Contains(roleEnum.ToString()))
+                return true;
+            return false;
         }
     }
 }
