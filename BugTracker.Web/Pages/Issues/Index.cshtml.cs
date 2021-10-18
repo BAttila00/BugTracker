@@ -68,11 +68,11 @@ namespace BugTracker.Web.Pages.Issues {
             //Lapozás
             pageNumber ??= 1;
             int pageNumberNotNull = pageNumber.Value;
-            int pageSize = 2;
-            int allPagesCount = Issue.Count();
+            int pageSize = 1;
+            int numberOfElements = Issue.Count();
             Issue = Issue.Skip((pageNumberNotNull - 1) * pageSize).Take(pageSize).ToList();
             PaginationContainer = new PaginationContainer<Issue> {
-                AllPagesCount = allPagesCount,
+                NumberOfElements = numberOfElements,
                 PageNumber = pageNumberNotNull,
                 PageSize = pageSize,
                 Pages = Issue

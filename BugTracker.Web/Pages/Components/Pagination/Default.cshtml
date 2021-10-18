@@ -1,0 +1,64 @@
+﻿@model BugTracker.Web.ViewComponents.PaginationViewComponent.PaginationOptions
+
+@{
+    Dictionary<string, string> allRouteData = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+    allRouteData.TryAdd("pageNumber", String.Empty);
+}
+
+@if (Model.TotalPages > 1) {
+    <nav>
+        <ul class="pagination justify-content-center">
+            @* Első oldalra link (dupla nyilacska)*@
+            @if (Model.PageNumber > 1) {
+                allRouteData["pageNumber"] = "1";
+                <li class="page-item">
+                    @* https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/built-in/anchor-tag-helper?view=aspnetcore-5.0#asp-all-route-data *@
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&lArr;</span>                                 @*character szimbólum kódok: https://oinam.github.io/entities/*@
+                    </a>
+                </li>
+            }
+            @* Elözö oldalra link (szimpla nyilacska)*@
+            @if (Model.PageNumber > 1) {
+                allRouteData["pageNumber"] = ((Model.PageNumber) - 1).ToString();
+                <li class="page-item">
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&larr;</span>
+                    </a>
+                </li>
+            }
+            @* Középső részen megjelenő linkek (oldal számok)*@
+            @for (var pageNumber = Math.Max(1, Model.PageNumber - Model.NumberOfPagesToShow); pageNumber <= Math.Min(Model.TotalPages, Model.PageNumber + Model.NumberOfPagesToShow); pageNumber++) {
+                @if (Model.PageNumber == pageNumber) {
+                    <li class="page-item active">
+                        <a class="page-link">@pageNumber</a>
+                    </li>
+                }
+                else {
+                    allRouteData["pageNumber"] = pageNumber.ToString();
+                    <li class="page-item">
+                        <a asp-all-route-data="@allRouteData" class="page-link">@pageNumber</a>
+                    </li>
+                }
+            }
+            @* Következö oldalra link (szimpla nyilacska)*@
+            @if (Model.PageNumber < Model.TotalPages) {
+                allRouteData["pageNumber"] = ((Model.PageNumber) + 1).ToString();
+                <li class="page-item">
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&rarr;</span>
+                    </a>
+                </li>
+            }
+            @* Utolsó oldalra link (dupla nyilacska)*@
+            @if (Model.PageNumber < Model.TotalPages) {
+                allRouteData["pageNumber"] = Model.TotalPages.ToString();
+                <li class="page-item">
+                    <a asp-all-route-data="@allRouteData" class="page-link">
+                        <span>&rArr;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
