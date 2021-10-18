@@ -10,6 +10,7 @@ using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
 using BugTracker.Web.SearchModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BugTracker.Dal.Dto;
 
 namespace BugTracker.Web.Pages.Issues {
     public class IndexModel : PageModel {
@@ -22,6 +23,7 @@ namespace BugTracker.Web.Pages.Issues {
         }
 
         public IList<Issue> Issue { get; set; }
+        public PaginationContainer<Issue> PaginationContainer { get; set;}
 
         [BindProperty(SupportsGet = true)]
         public IssueSearchModel IssueSearch { get; set; }
@@ -29,7 +31,7 @@ namespace BugTracker.Web.Pages.Issues {
         [BindProperty(SupportsGet = true)]
         public bool myIssues { get; set; }
 
-        public async Task<IActionResult> OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync(int? pageNumber) {
             ViewData["myIssues"] = myIssues;
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
@@ -62,6 +64,19 @@ namespace BugTracker.Web.Pages.Issues {
                 Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssueSeverity).ToList();
             if (IssueSearch.IssuePriority != -1)
                 Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssuePriority).ToList();
+
+            //Lapozás
+            pageNumber ??= 1;
+            int pageNumberNotNull = pageNumber.Value;
+            int pageSize = 2;
+            int allPagesCount = Issue.Count();
+            Issue = Issue.Skip((pageNumberNotNull - 1) * pageSize).Take(pageSize).ToList();
+            PaginationContainer = new PaginationContainer<Issue> {
+                AllPagesCount = allPagesCount,
+                PageNumber = pageNumberNotNull,
+                PageSize = pageSize,
+                Pages = Issue
+            };
 
             return Page();
         }

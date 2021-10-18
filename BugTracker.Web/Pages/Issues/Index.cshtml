@@ -138,7 +138,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Issue) {
+                    @foreach (var item in Model.PaginationContainer.Pages) {
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Descreption)
