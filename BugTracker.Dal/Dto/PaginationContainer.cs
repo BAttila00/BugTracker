@@ -8,6 +8,9 @@ namespace BugTracker.Dal.Dto {
         public IEnumerable<T> Pages { get; set; }
         public int NumberOfElements { get; set; }
         public int PageNumber { get; set; }
+        /// <summary>
+        /// The number of elements to show on one page.
+        /// </summary>
         public int PageSize { get; set; }
 
     }

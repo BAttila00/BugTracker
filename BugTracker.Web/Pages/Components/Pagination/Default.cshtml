@@ -3,9 +3,9 @@
 @{
     Dictionary<string, string> allRouteData = Context.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
     allRouteData.TryAdd("pageNumber", String.Empty);
+    allRouteData.TryAdd("pageSize", String.Empty);
 }
 
-@if (Model.TotalPages > 1) {
     <nav>
         <ul class="pagination justify-content-center">
             @* Első oldalra link (dupla nyilacska)*@
@@ -61,4 +61,13 @@
             }
         </ul>
     </nav>
-}
+    <div>
+        <p>Number of elements shown:&nbsp;</p>
+        @{allRouteData["pageNumber"] = Model.PageNumber.ToString();
+            allRouteData["pageSize"] = "2"; }
+        <a asp-all-route-data="@allRouteData">2&nbsp;&nbsp;</a>
+        @{allRouteData["pageSize"] = "3"; }
+    <a asp-all-route-data="@allRouteData">3&nbsp;&nbsp;</a>
+        @{allRouteData["pageSize"] = "50"; }
+        <a asp-all-route-data="@allRouteData">50</a>
+    </div>

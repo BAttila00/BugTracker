@@ -31,7 +31,7 @@ namespace BugTracker.Web.Pages.Issues {
         [BindProperty(SupportsGet = true)]
         public bool myIssues { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? pageNumber) {
+        public async Task<IActionResult> OnGetAsync(int? pageNumber, int? pageSize) {
             ViewData["myIssues"] = myIssues;
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
@@ -68,13 +68,16 @@ namespace BugTracker.Web.Pages.Issues {
             //Lapozás
             pageNumber ??= 1;
             int pageNumberNotNull = pageNumber.Value;
-            int pageSize = 1;
+
+            pageSize??= 1;
+            int pageSizeNotNull = Math.Min(pageSize.Value, 50);
             int numberOfElements = Issue.Count();
-            Issue = Issue.Skip((pageNumberNotNull - 1) * pageSize).Take(pageSize).ToList();
+            Issue = Issue.Skip((pageNumberNotNull - 1) * pageSizeNotNull).Take(pageSizeNotNull).ToList();
+            if (numberOfElements <= pageSizeNotNull) pageSizeNotNull = numberOfElements;
             PaginationContainer = new PaginationContainer<Issue> {
                 NumberOfElements = numberOfElements,
                 PageNumber = pageNumberNotNull,
-                PageSize = pageSize,
+                PageSize = pageSizeNotNull,
                 Pages = Issue
             };
 
