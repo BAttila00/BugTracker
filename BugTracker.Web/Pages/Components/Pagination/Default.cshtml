@@ -63,7 +63,7 @@
     </nav>
     <div>
         <p>Number of elements shown:&nbsp;</p>
-        @{allRouteData["pageNumber"] = Model.PageNumber.ToString();
+        @{allRouteData["pageNumber"] = "1";
             allRouteData["pageSize"] = "2"; }
         <a asp-all-route-data="@allRouteData">2&nbsp;&nbsp;</a>
         @{allRouteData["pageSize"] = "3"; }
