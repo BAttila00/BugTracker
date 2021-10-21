@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BugTracker.Dal.Dto;
 using BugTracker.Dal.Entities;
 using BugTracker.Dal.UserRoles;
 using BugTracker.Web.SearchModels;
@@ -24,11 +25,12 @@ namespace BugTracker.Web.Pages.Users
         }
 
         public IList<User> User { get;set; }
+        public PaginationContainer<User> PaginationContainer { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public UserSearchModel UserSearch { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? pageNumber, int? pageSize)
         {
             User = await _context.Users.ToListAsync();
 
@@ -46,6 +48,22 @@ namespace BugTracker.Web.Pages.Users
                 }
                 User = usersWithRole;
             }
+
+            //Lapozás
+            pageNumber ??= 1;
+            int pageNumberNotNull = pageNumber.Value;
+
+            pageSize ??= 1;
+            int pageSizeNotNull = Math.Min(pageSize.Value, 50);
+            int numberOfElements = User.Count();
+            User = User.Skip((pageNumberNotNull - 1) * pageSizeNotNull).Take(pageSizeNotNull).ToList();
+            if (numberOfElements <= pageSizeNotNull) pageSizeNotNull = numberOfElements;
+            PaginationContainer = new PaginationContainer<User> {
+                NumberOfElements = numberOfElements,
+                PageNumber = pageNumberNotNull,
+                PageSize = pageSizeNotNull,
+                Pages = User
+            };
         }
 
         public async Task<string> GetUserRoles(User user) {
