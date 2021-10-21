@@ -48,10 +48,7 @@ namespace BugTracker.Web.Pages.Issues
             Issue.ModifiedBy = applicationUser;
             Issue.CreationDate = DateTime.Now;
             Issue.ModifiedOn = DateTime.Now;
-
-            if(Issue.AssignedToId == null) {
-                
-            }
+            Issue.SolvedOn = null;
 
             _context.Issues.Add(Issue);
             await _context.SaveChangesAsync();

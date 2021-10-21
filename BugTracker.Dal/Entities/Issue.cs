@@ -29,7 +29,7 @@ namespace BugTracker.Dal.Entities {
 
         [ForeignKey("ModifiedById")]
         public virtual User ModifiedBy { get; set; }
-        public DateTime SolvedOn { get; set; }
+        public DateTime? SolvedOn { get; set; }
 
 
         public virtual ICollection<Comment> Comments { get; set; }

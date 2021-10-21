@@ -62,6 +62,8 @@ namespace BugTracker.Web.Pages.Issues
             User applicationUser = await _userManager.GetUserAsync(User);
             Issue.ModifiedBy = applicationUser;
             Issue.ModifiedOn = DateTime.Now;
+            if (Issue.IssueStatus == IssueStatus.Closed)
+                Issue.SolvedOn = DateTime.Now;
 
             _context.Attach(Issue).State = EntityState.Modified;
 

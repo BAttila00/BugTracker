@@ -51,12 +51,6 @@
                 <select asp-for="Issue.IssueSeverity" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueSeverity>()"></select>
                 <span asp-validation-for="Issue.IssueSeverity" class="text-danger"></span>
             </div>
-            @* TODO: Ezt levenni innen. Ha a status lezárt-ra módosul akkor állítsuk "most"-ra*@
-            <div class="form-group">
-                <label asp-for="Issue.SolvedOn" class="control-label"></label>
-                <input asp-for="Issue.SolvedOn" class="form-control" />
-                <span asp-validation-for="Issue.SolvedOn" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
