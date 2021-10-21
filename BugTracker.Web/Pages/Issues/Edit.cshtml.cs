@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Web.Pages.Issues
 {
     public class EditModel : PageModel
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(BugTracker.Dal.BugTrackerDbContext context)
+        public EditModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -40,9 +43,9 @@ namespace BugTracker.Web.Pages.Issues
             {
                 return NotFound();
             }
-           ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "Id");
-           ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
-           ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "Id");
+           ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
+           ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
+           ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
             return Page();
         }
@@ -55,6 +58,10 @@ namespace BugTracker.Web.Pages.Issues
             {
                 return Page();
             }
+
+            User applicationUser = await _userManager.GetUserAsync(User);
+            Issue.ModifiedBy = applicationUser;
+            Issue.ModifiedOn = DateTime.Now;
 
             _context.Attach(Issue).State = EntityState.Modified;
 

@@ -153,7 +153,7 @@
                                 @Html.DisplayFor(modelItem => item.Descreption)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Creator.Id)
+                                @Html.DisplayFor(modelItem => item.Creator.UserName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.IssueStatus)
@@ -162,7 +162,7 @@
                                 @Html.DisplayFor(modelItem => item.CreationDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.AssignedTo.Id)
+                                @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Project.ProjectName)
@@ -177,7 +177,7 @@
                                 @Html.DisplayFor(modelItem => item.ModifiedOn)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedBy.Id)
+                                @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.SolvedOn)
