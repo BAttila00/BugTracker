@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
 using BugTracker.Web.SearchModels;
+using BugTracker.Dal.Dto;
 
 namespace BugTracker.Web.Pages.Projects {
     public class IndexModel : PageModel {
@@ -23,6 +24,7 @@ namespace BugTracker.Web.Pages.Projects {
         }
 
         public IList<Project> Project { get; set; }
+        public PaginationContainer<Project> PaginationContainer { get; set; }
 
         public IList<ProjectUser> ProjectUser { get; set; }
 
@@ -32,7 +34,7 @@ namespace BugTracker.Web.Pages.Projects {
         [BindProperty(SupportsGet = true)]
         public bool myProjects { get; set; }
 
-        public async Task<IActionResult> OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync(int? pageNumber, int? pageSize) {
             ViewData["myProjects"] = myProjects;
             Project = await _context.Projects
                 .Include(p => p.Creator)
@@ -77,6 +79,23 @@ namespace BugTracker.Web.Pages.Projects {
 
             if (ProjectSearch.ProjectStatus != -1)
                 Project = Project.Where(a => (int)a.ProjectStatus == ProjectSearch.ProjectStatus).ToList();
+
+
+            //Lapozás
+            pageNumber ??= 1;
+            int pageNumberNotNull = pageNumber.Value;
+
+            pageSize ??= 1;
+            int pageSizeNotNull = Math.Min(pageSize.Value, 50);
+            int numberOfElements = Project.Count();
+            Project = Project.Skip((pageNumberNotNull - 1) * pageSizeNotNull).Take(pageSizeNotNull).ToList();
+            if (numberOfElements <= pageSizeNotNull) pageSizeNotNull = numberOfElements;
+            PaginationContainer = new PaginationContainer<Project> {
+                NumberOfElements = numberOfElements,
+                PageNumber = pageNumberNotNull,
+                PageSize = pageSizeNotNull,
+                Pages = Project
+            };
 
 
             return Page();
