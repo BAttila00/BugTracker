@@ -26,23 +26,29 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         @if (Context.User.Identity.IsAuthenticated) {
-                            //TODO: ez csak akkor legyen látható ha admin-ként vagyunk bejelentkezve
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Projects/Index">Projects</a>
-                            </li>
+                            @if (User.IsInRole("Administrators")) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Projects/Index">Projects</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Projects/Index" asp-route-myProjects="true">My Projects</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Issues/Index">Issues</a>
-                            </li>
+                            @if (User.IsInRole("Administrators")) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Issues/Index">Issues</a>
+                                </li>
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Issues/Index" asp-route-myIssues="true">My Issues</a>
                             </li>
-                            //TODO: ez csak akkor legyen látható ha admin-ként vagyunk bejelentkezve
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Users/Index">Users</a>
-                            </li>
+                            @if (User.IsInRole("Administrators")) {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Users/Index">Users</a>
+                                </li>
+                            }
+
                         }
                     </ul>
                 </div>
