@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace BugTracker.Web.Pages.Projects
 {
     public class EditModel : PageModel
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public EditModel(BugTracker.Dal.BugTrackerDbContext context)
+        public EditModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -38,8 +41,8 @@ namespace BugTracker.Web.Pages.Projects
             {
                 return NotFound();
             }
-           ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "Id");
-           ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "Id");
+           ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
+           ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
             return Page();
         }
 
@@ -52,6 +55,9 @@ namespace BugTracker.Web.Pages.Projects
                 return Page();
             }
 
+            User applicationUser = await _userManager.GetUserAsync(User);
+            Project.ModifiedBy = applicationUser;
+            Project.ModifiedOn = DateTime.Now;
             _context.Attach(Project).State = EntityState.Modified;
 
             try

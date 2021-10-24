@@ -27,7 +27,7 @@
             @Html.DisplayNameFor(model => model.Project.Creator)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Project.Creator.Id)
+            @Html.DisplayFor(model => model.Project.Creator.UserName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Project.ProjectName)
@@ -57,7 +57,7 @@
             @Html.DisplayNameFor(model => model.Project.ModifiedBy)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Project.ModifiedBy.Id)
+            @Html.DisplayFor(model => model.Project.ModifiedBy.UserName)
         </dd>
     </dl>
 </div>
