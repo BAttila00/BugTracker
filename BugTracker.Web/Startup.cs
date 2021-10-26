@@ -53,6 +53,10 @@ namespace BugTracker.Web {
                 options.Conventions.AuthorizePage("/Projects/Create", "RequireAdministratorOrLeadDeveloperRole");
                 options.Conventions.AuthorizePage("/Issues/Delete", "RequireAdministratorOrLeadDeveloperRole");
             });
+
+            services.ConfigureApplicationCookie(options => {
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
