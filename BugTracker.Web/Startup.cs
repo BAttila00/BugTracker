@@ -1,5 +1,6 @@
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using BugTracker.Dal.UserRoles;
 using BugTracker.Web.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,10 +38,20 @@ namespace BugTracker.Web {
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));  //A MailSettings.cs fájlba felolvassa a appsettings.Development.json-ben a MailSettings section alatt beállított értékeket
             services.AddTransient<IEmailSender, Services.EmailSender>();
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("RequireAdministratorOrLeadDeveloperRole", policy => policy.RequireRole(Roles.Administrators.ToString(), Roles.LeadDevelopers.ToString()));
+                options.AddPolicy("RequireAdministratorRole", policy => policy.RequireRole(Roles.Administrators.ToString()));
+            });
+
             services.AddRazorPages(options =>
             {
                 options.Conventions.AuthorizeFolder("/Projects");       //Ne lehessen elérni /Projects mappát csak ha be vagyunk jelentkezve.
                 options.Conventions.AuthorizeFolder("/Issues");
+                options.Conventions.AuthorizeFolder("/Users", "RequireAdministratorRole");
+                options.Conventions.AuthorizePage("/Projects/Edit", "RequireAdministratorOrLeadDeveloperRole");
+                options.Conventions.AuthorizePage("/Projects/Delete", "RequireAdministratorOrLeadDeveloperRole");
+                options.Conventions.AuthorizePage("/Projects/Create", "RequireAdministratorOrLeadDeveloperRole");
+                options.Conventions.AuthorizePage("/Issues/Delete", "RequireAdministratorOrLeadDeveloperRole");
             });
         }
 

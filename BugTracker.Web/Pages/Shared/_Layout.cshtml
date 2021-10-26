@@ -26,7 +26,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                         @if (Context.User.Identity.IsAuthenticated) {
-                            @if (User.IsInRole("Administrators")) {
+                            @if (User.IsInRole("Administrators") || User.IsInRole("LeadDevelopers")) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Projects/Index">Projects</a>
                                 </li>
@@ -34,7 +34,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Projects/Index" asp-route-myProjects="true">My Projects</a>
                             </li>
-                            @if (User.IsInRole("Administrators")) {
+                            @if (User.IsInRole("Administrators") || User.IsInRole("LeadDevelopers")) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Issues/Index">Issues</a>
                                 </li>
@@ -43,7 +43,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Issues/Index" asp-route-myIssues="true">My Issues</a>
                             </li>
-                            @if (User.IsInRole("Administrators")) {
+                            @if (User.IsInRole("Administrators") || User.IsInRole("LeadDevelopers")) {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Users/Index">Users</a>
                                 </li>
