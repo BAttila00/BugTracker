@@ -87,12 +87,12 @@ namespace BugTracker.Web.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    //User Role-ok létrehozása
-                    foreach (Roles role in (Roles[])Enum.GetValues(typeof(Roles))) {
-                        if (!await _roleManager.RoleExistsAsync(role.ToString())) {
-                            await _roleManager.CreateAsync(new IdentityRole<int>(role.ToString()));
-                        }
-                    }
+                    ////User Role-ok létrehozása
+                    //foreach (Roles role in (Roles[])Enum.GetValues(typeof(Roles))) {
+                    //    if (!await _roleManager.RoleExistsAsync(role.ToString())) {
+                    //        await _roleManager.CreateAsync(new IdentityRole<int>(role.ToString()));
+                    //    }
+                    //}
 
                     await _userManager.AddToRoleAsync(user, Role.ToString());
 
