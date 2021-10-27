@@ -40,6 +40,11 @@
                 <span asp-validation-for="Project.ProjectStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Users on project: </label>
+                <label class="control-label">@Model.GetProjectUserUserNames()</label>
+                <a asp-page="./ManageProjectUsers" asp-route-projectId="@Model.Project.Id">Edit users</a>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

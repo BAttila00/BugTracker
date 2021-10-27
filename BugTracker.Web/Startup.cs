@@ -51,6 +51,7 @@ namespace BugTracker.Web {
                 options.Conventions.AuthorizePage("/Projects/Edit", "RequireAdministratorOrLeadDeveloperRole");
                 options.Conventions.AuthorizePage("/Projects/Delete", "RequireAdministratorOrLeadDeveloperRole");
                 options.Conventions.AuthorizePage("/Projects/Create", "RequireAdministratorOrLeadDeveloperRole");
+                options.Conventions.AuthorizePage("/Projects/ManageProjectUsers", "RequireAdministratorOrLeadDeveloperRole");
                 options.Conventions.AuthorizePage("/Issues/Delete", "RequireAdministratorOrLeadDeveloperRole");
             });
 

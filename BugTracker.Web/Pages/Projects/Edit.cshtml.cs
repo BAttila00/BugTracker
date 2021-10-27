@@ -25,6 +25,7 @@ namespace BugTracker.Web.Pages.Projects
 
         [BindProperty]
         public Project Project { get; set; }
+        public IList<ProjectUser> ProjectUser { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,6 +37,10 @@ namespace BugTracker.Web.Pages.Projects
             Project = await _context.Projects
                 .Include(p => p.Creator)
                 .Include(p => p.ModifiedBy).FirstOrDefaultAsync(m => m.Id == id);
+
+            ProjectUser = await _context.ProjectUsers
+                .Include(p => p.User)
+                .Include(p => p.Project).Where(p => p.ProjectId == id).ToListAsync();
 
             if (Project == null)
             {
@@ -82,6 +87,10 @@ namespace BugTracker.Web.Pages.Projects
         private bool ProjectExists(int id)
         {
             return _context.Projects.Any(e => e.Id == id);
+        }
+
+        public string GetProjectUserUserNames() {
+            return string.Join(", ", ProjectUser.Select(p => p.User.UserName).ToList());
         }
     }
 }

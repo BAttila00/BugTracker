@@ -1,0 +1,43 @@
+﻿@page
+@model BugTracker.Web.Pages.Projects.ManageProjectUsersModel
+@{
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <section class="col-lg-4">
+        </section>
+        <section class="col-lg-8">
+            <form method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Manage Project Users</h2>
+                    </div>
+                    <div class="card-body">
+                        @for (int i = 0; i < Model.ProjectUsersModels.Count; i++) {
+
+                        <div class="form-check m-1">
+                            <input class="form-control" type="hidden" asp-for="ProjectUsersModels[i].UserId" />
+                            <input class="form-control" type="hidden" asp-for="ProjectUsersModels[i].UserName" />
+                            <input asp-for="ProjectUsersModels[i].Selected" class="form-check-input" />
+                            <label class="form-check-label">
+                                @Model.ProjectUsersModels[i].UserName
+                            </label>
+                        </div>
+                        }
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                    </div>
+                    <div class="card-footer">
+                        <input type="submit" value="Update" class="btn btn-primary"
+                               style="width:auto" />
+                        <a asp-page="./Edit" asp-route-id="@Model.Project.Id"
+                           class="btn btn-primary" style="width:auto">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
