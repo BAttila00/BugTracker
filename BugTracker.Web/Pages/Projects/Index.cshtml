@@ -102,7 +102,7 @@
                                 @Html.DisplayFor(modelItem => item.Creator.UserName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.ProjectName)
+                                <a asp-page="../Issues/Index" asp-route-projectId="@item.Id">@Html.DisplayFor(modelItem => item.ProjectName)</a>
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ProjectDescreption)

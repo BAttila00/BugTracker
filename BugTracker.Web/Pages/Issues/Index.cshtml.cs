@@ -31,7 +31,7 @@ namespace BugTracker.Web.Pages.Issues {
         [BindProperty(SupportsGet = true)]
         public bool myIssues { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? pageNumber, int? pageSize) {
+        public async Task<IActionResult> OnGetAsync(int? pageNumber, int? pageSize, int? projectId) {
             ViewData["myIssues"] = myIssues;
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
@@ -46,6 +46,9 @@ namespace BugTracker.Web.Pages.Issues {
             if ((!roles.Contains("Administrators") && !myIssues) || myIssues) {
                 Issue = Issue.Where(i => i.AssignedToId == applicationUser.Id).ToList();
             }
+
+            if(projectId != null)
+                Issue = Issue.Where(a => a.ProjectId == projectId).ToList();
 
             ViewData["UsersWithUserName"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
