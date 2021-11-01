@@ -5,107 +5,128 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<div class="container">
-    <div class="row">
-        <section class="col-lg-4">
-            <h2>Search</h2>
-            <form class="form-horizontal">
-                <div class="form-group row">
-                    <label class="col-xs-12">Username</label>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="input-group">
-                            <input asp-for="UserSearch.UserName" class="form-control" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+</head>
+
+<body>
+    <h1>Index</h1>
+
+    <div class="container">
+        <div class="row">
+            <section class="col-lg-4">
+                <h2>Search</h2>
+                <form class="form-horizontal">
+                    <div class="form-group row">
+                        <label class="col-xs-12">Username</label>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="input-group">
+                                <input asp-for="UserSearch.UserName" class="form-control" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-xs-12">Email Confirmed</label>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="input-group">
-                            <select asp-for="UserSearch.EmailConfirmedString" class="form-control">
-                                <option value="All" selected="selected">All</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
+                    <div class="form-group row">
+                        <label class="col-xs-12">Email Confirmed</label>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="input-group">
+                                <select asp-for="UserSearch.EmailConfirmedString" class="form-control">
+                                    <option value="All" selected="selected">All</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-xs-12">User Role</label>
-                    <div class="col-xs-12 col-md-12">
-                        <div class="input-group">
-                            <select asp-for="UserSearch.Role" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.UserRoles.Roles>()">
-                                <option value="-1">All</option>
-                            </select>
+                    <div class="form-group row">
+                        <label class="col-xs-12">User Role</label>
+                        <div class="col-xs-12 col-md-12">
+                            <div class="input-group">
+                                <select asp-for="UserSearch.Role" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.UserRoles.Roles>()">
+                                    <option value="-1">All</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-xs-3">
-                        <input type="submit" value="Search" class="btn btn-default" />
+                    <div class="form-group row">
+                        <div class="col-xs-3">
+                            <input type="submit" value="Search" class="btn btn-default" />
+                        </div>
                     </div>
-                </div>
-            </form>
-        </section>
-        <section class="col-lg-8">
-            <div class="card text-center border-0">
-                <div class="card-body">
-                    <div class="mb-1">
-                        @Model.PaginationContainer.NumberOfElements results found
+                </form>
+            </section>
+            <section class="col-lg-8">
+                <div class="card text-center border-0">
+                    <div class="card-body">
+                        <div class="mb-1">
+                            @Model.PaginationContainer.NumberOfElements results found
+                        </div>
                     </div>
+                    @*https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components?view=aspnetcore-5.0#invoking-a-view-component*@
+                    @await Component.InvokeAsync("Pagination", new { pageSize = Model.PaginationContainer.PageSize, pageNumber = Model.PaginationContainer.PageNumber, numberOfElements = Model.PaginationContainer.NumberOfElements, numberOfPagesToShow = 2 })
                 </div>
-                @*https://docs.microsoft.com/en-us/aspnet/core/mvc/views/view-components?view=aspnetcore-5.0#invoking-a-view-component*@
-                @await Component.InvokeAsync("Pagination", new { pageSize = Model.PaginationContainer.PageSize, pageNumber = Model.PaginationContainer.PageNumber, numberOfElements = Model.PaginationContainer.NumberOfElements, numberOfPagesToShow = 2 })
-            </div>
-            <p>
-                <a asp-page="Create">Create New</a>
-            </p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.User[0].UserName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.User[0].Email)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.User[0].EmailConfirmed)
-                        </th>
-                        <th>
-                            User roles
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.User) {
+                <p>
+                    <a asp-page="Create">Create New</a>
+                </p>
+                <table class="table table-striped table-bordered" id="sortTable">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmailConfirmed)
-                            </td>
-                            <td>
-                                @(await Model.GetUserRoles(item))
-                            </td>
-                            <td>
-                                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User[0].UserName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User[0].Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.User[0].EmailConfirmed)
+                            </th>
+                            <th>
+                                User roles
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </section>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.User) {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                                </td>
+                                <td>
+                                    @(await Model.GetUserRoles(item))
+                                </td>
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </section>
+        </div>
     </div>
-</div>
 
+    <script>
+        $('#sortTable').DataTable({
+            /* https://mdbootstrap.com/docs/b4/jquery/tables/datatables/ */
+            "paging": false,
+            "searching": false,
+            "info": false
+        });
+    </script>
 
+</body>
