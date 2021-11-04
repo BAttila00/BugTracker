@@ -40,13 +40,13 @@ namespace BugTracker.Dal {
                 entity.HasOne(d => d.Project)
                     .WithMany(p => p.ProjectUsers)
                     .HasForeignKey(d => d.ProjectId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ProjectUser_Project");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ProjectUsers)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_ProjectUser_User");
             });
 
