@@ -21,10 +21,17 @@ namespace BugTracker.Web.Pages.Issues
         {
             _context = context;
             _userManager = userManager;
+            Comments = new List<Comment>();
         }
 
         [BindProperty]
         public Issue Issue { get; set; }
+
+        [BindProperty]
+        public Comment NewComment { get; set; }
+        public List<Comment> Comments { get; set; }
+
+        public string UserName { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,6 +39,10 @@ namespace BugTracker.Web.Pages.Issues
             {
                 return NotFound();
             }
+
+            Comments = _context.Comments.Where(c => c.IssueId == id).ToList();
+            NewComment = new Comment();
+            UserName = _userManager.GetUserName(User);
 
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
@@ -43,10 +54,11 @@ namespace BugTracker.Web.Pages.Issues
             {
                 return NotFound();
             }
-           ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
-           ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
-           ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
-           ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
+            ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
+
             return Page();
         }
 
@@ -89,6 +101,32 @@ namespace BugTracker.Web.Pages.Issues
         private bool IssueExists(int id)
         {
             return _context.Issues.Any(e => e.Id == id);
+        }
+
+        public IActionResult OnPostPostComment() {
+
+            if (!ModelState.IsValid) {
+                return RedirectToPage("/Issues/Edit", new { id = NewComment.IssueId });
+            }
+
+            string userId = _userManager.GetUserId(User);
+            try {
+                NewComment.IssueId = Issue.Id;
+                NewComment.UserId = int.Parse(userId);
+
+                _context.Comments.Add(new Comment {
+                    IssueId = NewComment.IssueId,
+                    UserId = NewComment.UserId,
+                    Text = NewComment.Text,
+                    CreationDate = DateTime.Now
+                });
+                _context.SaveChanges();
+                return RedirectToPage("/Issues/Edit", new { id = NewComment.IssueId });
+            }
+            catch (Exception ex) {
+
+            }
+            return RedirectToPage("./Index");
         }
     }
 }
