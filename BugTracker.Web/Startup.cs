@@ -58,6 +58,8 @@ namespace BugTracker.Web {
             services.ConfigureApplicationCookie(options => {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
             });
+
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
