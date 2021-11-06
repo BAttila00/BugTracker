@@ -20,6 +20,7 @@ namespace BugTracker.Web.Pages.Issues
         }
 
         public Issue Issue { get; set; }
+        public List<Comment> Comments { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,6 +34,8 @@ namespace BugTracker.Web.Pages.Issues
                 .Include(i => i.Creator)
                 .Include(i => i.ModifiedBy)
                 .Include(i => i.Project).FirstOrDefaultAsync(m => m.Id == id);
+
+            Comments = _context.Comments.Where(c => c.IssueId == id).ToList();
 
             if (Issue == null)
             {

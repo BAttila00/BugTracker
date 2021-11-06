@@ -83,3 +83,18 @@
     <a asp-page="./Edit" asp-route-id="@Model.Issue.Id">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
+
+
+<h3>Comments</h3>
+<div>
+    @foreach (var comment in Model.Comments) {
+        <div class="d-flex my-2">
+            <div class="d-flex flex-column align-items-center flex-shrink-0 mr-3">
+                <span>@comment.User.UserName</span>
+                <span class="text-secondary">@(comment.CreationDate.ToShortDateString())</span>
+                <span class="text-secondary">@(comment.CreationDate.ToShortTimeString())</span>
+            </div>
+            <div>@comment.Text</div>
+        </div>
+    }
+</div>
