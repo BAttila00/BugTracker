@@ -119,90 +119,93 @@
                 <p>
                     <a asp-page="Create">Create New</a>
                 </p>
-                <table class="table table-striped table-bordered" id="sortTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].Descreption)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].Creator)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].IssueStatus)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].CreationDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].AssignedTo)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].Project)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].IssuePriority)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].IssueSeverity)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].ModifiedOn)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].ModifiedBy)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Issue[0].SolvedOn)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.PaginationContainer.Pages) {
+                <div class="h-50" style="width: 1000px; overflow-y: scroll;">
+                    <table class="table" id="sortTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Descreption)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Creator.UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IssueStatus)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreationDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IssuePriority)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IssueSeverity)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ModifiedOn)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SolvedOn)
-                                </td>
-                                <td>
-                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].Descreption)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].Creator)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].IssueStatus)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].CreationDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].AssignedTo)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].Project)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].IssuePriority)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].IssueSeverity)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].ModifiedOn)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].ModifiedBy)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].SolvedOn)
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PaginationContainer.Pages) {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Descreption)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Creator.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IssueStatus)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreationDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IssuePriority)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.IssueSeverity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedOn)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.SolvedOn)
+                                    </td>
+                                    <td>
+                                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
             </section>
         </div>
     </div>
