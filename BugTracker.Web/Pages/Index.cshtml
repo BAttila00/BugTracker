@@ -153,23 +153,29 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.IssuesResolvedCreatedByMe[0].Project)
                             </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IssuesResolvedCreatedByMe[0].AssignedTo)
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.IssuesResolvedCreatedByMe) {
-                            <tr>
-                                <td>
-                                    <a asp-page="/Issues/Details" asp-route-id="@item.Id">
-                                        @Html.DisplayFor(modelItem => item.Descreption)
-                                    </a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IssueStatus)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <a asp-page="/Issues/Details" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Descreption)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IssueStatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                            </td>
+                        </tr>
                         }
                     </tbody>
                     <tfoot>
@@ -182,6 +188,9 @@
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.IssuesResolvedCreatedByMe[0].Project)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IssuesResolvedCreatedByMe[0].AssignedTo)
                             </th>
                         </tr>
                     </tfoot>
@@ -211,7 +220,13 @@
                                 @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].Project)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].AssignedTo)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].ModifiedOn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].ModifiedBy)
                             </th>
                         </tr>
                     </thead>
@@ -230,7 +245,13 @@
                                 @Html.DisplayFor(modelItem => item.Project.ProjectName)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
                             </td>
                         </tr>
                         }
@@ -247,7 +268,13 @@
                                 @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].Project)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].AssignedTo)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].ModifiedOn)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IssuesRecentlyModified[0].ModifiedBy)
                             </th>
                         </tr>
                     </tfoot>
