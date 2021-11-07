@@ -135,7 +135,12 @@
                         /* https://mdbootstrap.com/docs/b4/jquery/tables/datatables/ */
                         "paging": false,
                         "searching": false,
-                        "info": false
+                        "info": false,
+                        "aaSorting": [],
+                        columnDefs: [{
+                            orderable: false,
+                            targets: 6
+                        }]
                     });
                 </script>
             </section>
