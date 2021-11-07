@@ -76,62 +76,64 @@
                 <p>
                     <a asp-page="Create">Create New</a>
                 </p>
-                <table class="table table-striped table-bordered" id="sortTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].CreationDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].PlannedFinishDate)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].Creator)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].ProjectName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].ProjectDescreption)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Project[0].ProjectStatus)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Project) {
+                <div class="h-50 w-100" style="overflow-y: scroll;">
+                    <table class="table table-striped table-bordered" id="sortTable">
+                        <thead>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreationDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PlannedFinishDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Creator.UserName)
-                                </td>
-                                <td>
-                                    <a asp-page="/Issues/Index" asp-route-projectId="@item.Id">@Html.DisplayFor(modelItem => item.ProjectName)</a>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectDescreption)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProjectStatus)
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-row">
-                                        <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit mx-1" data-toggle="tooltip" data-placement="top" title="Edit..."></i></a>
-                                        <a asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info-circle mx-1" data-toggle="tooltip" data-placement="top" title="Details..."></i></a>
-                                        <a asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt mx-1 fa-color-red" data-toggle="tooltip" data-placement="top" title="Delete..."></i></a>
-                                    </div>
-                                </td>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].CreationDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].PlannedFinishDate)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].Creator)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].ProjectName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].ProjectDescreption)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Project[0].ProjectStatus)
+                                </th>
+                                <th></th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Project) {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreationDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlannedFinishDate)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Creator.UserName)
+                                    </td>
+                                    <td>
+                                        <a asp-page="/Issues/Index" asp-route-projectId="@item.Id">@Html.DisplayFor(modelItem => item.ProjectName)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProjectDescreption)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ProjectStatus)
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-row">
+                                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit mx-1" data-toggle="tooltip" data-placement="top" title="Edit..."></i></a>
+                                            <a asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info-circle mx-1" data-toggle="tooltip" data-placement="top" title="Details..."></i></a>
+                                            <a asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt mx-1 fa-color-red" data-toggle="tooltip" data-placement="top" title="Delete..."></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
                 <script>
                     $('#sortTable').DataTable({
                         /* https://mdbootstrap.com/docs/b4/jquery/tables/datatables/ */
