@@ -196,9 +196,11 @@
                                         @Html.DisplayFor(modelItem => item.SolvedOn)
                                     </td>
                                     <td>
-                                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                        <div class="d-flex flex-row">
+                                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit mx-1"></i></a>
+                                            <a asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info-circle mx-1"></i></a>
+                                            <a asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt mx-1 fa-color-red"></i></a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
