@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BugTracker.Dal.Entities.Comment">
+    <Position X="6.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAEDAAAAAAAAAAAAAAAAAAgAAAAAAAAAEAAACAAAAAA=</HashCode>
+      <FileName>Entities\Comment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+      <Property Name="Issue" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BugTracker.Dal.Entities.User">
+    <Position X="9.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEBAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAoAA=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Identity.IdentityUser&lt;TKey&gt;">
+    <Position X="9.75" Y="1" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="BugTracker.Dal.Entities.Project">
+    <Position X="7" Y="2" Width="1.5" />
+    <AssociationLine Name="Creator" Type="BugTracker.Dal.Entities.User" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.5" Y="4.812" />
+        <Point X="8.875" Y="4.812" />
+        <Point X="8.875" Y="5.654" />
+        <Point X="10.062" Y="5.654" />
+        <Point X="10.062" Y="6.25" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ModifiedBy" Type="BugTracker.Dal.Entities.User" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.438" Y="5.286" />
+        <Point X="8.438" Y="7.188" />
+        <Point X="9.75" Y="7.188" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QAECCARAAAAAAAAGCAAABAAAAEAAAAAAEAAAAAAAgAA=</HashCode>
+      <FileName>Entities\Project.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Creator" />
+      <Property Name="ModifiedBy" />
+      <Property Name="ProjectStatus" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BugTracker.Dal.Entities.Issue">
+    <Position X="4.25" Y="6.25" Width="1.5" />
+    <AssociationLine Name="AssignedTo" Type="BugTracker.Dal.Entities.User" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="9.062" />
+        <Point X="10.5" Y="9.062" />
+        <Point X="10.5" Y="8.896" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="ModifiedBy" Type="BugTracker.Dal.Entities.User" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.375" Y="9.084" />
+        <Point X="5.375" Y="9.459" />
+        <Point X="11.625" Y="9.459" />
+        <Point X="11.625" Y="8.562" />
+        <Point X="11.25" Y="8.562" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>QgACCABAAAAgAAACAAAACAAAFEAAAAAAEAABAAAAKCA=</HashCode>
+      <FileName>Entities\Issue.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AssignedTo" />
+      <Property Name="IssuePriority" />
+      <Property Name="Creator" />
+      <Property Name="IssueSeverity" />
+      <Property Name="IssueStatus" />
+      <Property Name="ModifiedBy" />
+      <Property Name="Project" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="BugTracker.Dal.Entities.ProjectUser">
+    <Position X="12.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAACAgABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ProjectUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="User" />
+      <Property Name="Project" />
+    </ShowAsAssociation>
+  </Class>
+  <Enum Name="BugTracker.Dal.Entities.IssuePriority">
+    <Position X="1.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAgAAAAAAAAgIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\IssuePriority.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BugTracker.Dal.Entities.IssueSeverity">
+    <Position X="1.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAQAAAAAAAAAAAAAAAAAAAAAAAAAgCAAAACA=</HashCode>
+      <FileName>Entities\IssueSeverity.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BugTracker.Dal.Entities.IssueStatus">
+    <Position X="4.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAABAAAAAQAAAAAAAAACAAgA=</HashCode>
+      <FileName>Entities\IssueStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BugTracker.Dal.Entities.ProjectStatus">
+    <Position X="4" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ProjectStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

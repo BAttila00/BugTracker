@@ -18,6 +18,7 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+@if (User.Identity.IsAuthenticated) { 
 <section>
     <div>
         <p>
@@ -160,22 +161,22 @@
                     </thead>
                     <tbody>
                         @foreach (var item in Model.IssuesResolvedCreatedByMe) {
-                        <tr>
-                            <td>
-                                <a asp-page="/Issues/Details" asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Descreption)
-                                </a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IssueStatus)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Project.ProjectName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <a asp-page="/Issues/Details" asp-route-id="@item.Id">
+                                        @Html.DisplayFor(modelItem => item.Descreption)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IssueStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                                </td>
+                            </tr>
                         }
                     </tbody>
                     <tfoot>
@@ -232,28 +233,28 @@
                     </thead>
                     <tbody>
                         @foreach (var item in Model.IssuesRecentlyModified) {
-                        <tr>
-                            <td>
-                                <a asp-page="/Issues/Details" asp-route-id="@item.Id">
-                                    @Html.DisplayFor(modelItem => item.Descreption)
-                                </a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IssueStatus)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Project.ProjectName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedOn)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    <a asp-page="/Issues/Details" asp-route-id="@item.Id">
+                                        @Html.DisplayFor(modelItem => item.Descreption)
+                                    </a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IssueStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedOn)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
+                                </td>
+                            </tr>
                         }
                     </tbody>
                     <tfoot>
@@ -284,6 +285,9 @@
     </div>
 
 </section>
+}
+
+
 
 <script>
     $('#IssuesUnresolvedAssignedToMeTable').DataTable({

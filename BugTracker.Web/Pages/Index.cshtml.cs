@@ -29,19 +29,21 @@ namespace BugTracker.Web.Pages {
         }
 
         public void OnGet() {
-            //A bejelentkezett user id-ja
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            if (User.Identity.IsAuthenticated) {
+                //A bejelentkezett user id-ja
+                int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            Issues = _context.Issues
-                .Include(i => i.AssignedTo)
-                .Include(i => i.Creator)
-                .Include(i => i.ModifiedBy)
-                .Include(i => i.Project).ToList();
+                Issues = _context.Issues
+                    .Include(i => i.AssignedTo)
+                    .Include(i => i.Creator)
+                    .Include(i => i.ModifiedBy)
+                    .Include(i => i.Project).ToList();
 
-            IssuesUnresolvedAssignedToMe = Issues.Where(i => i.AssignedToId == userId && i.IssueStatus != IssueStatus.Resolved && i.IssueStatus != IssueStatus.Closed).ToList();
-            IssuesUnassigned = Issues.Where(i => i.IssueStatus == IssueStatus.Unassigned).ToList();
-            IssuesResolvedCreatedByMe = Issues.Where(i => i.IssueStatus == IssueStatus.Resolved && i.CreatorId == userId).ToList();
-            IssuesRecentlyModified = Issues.Where(i => ((DateTime.Now - i.ModifiedOn).TotalDays < 5)).ToList();
+                IssuesUnresolvedAssignedToMe = Issues.Where(i => i.AssignedToId == userId && i.IssueStatus != IssueStatus.Resolved && i.IssueStatus != IssueStatus.Closed).ToList();
+                IssuesUnassigned = Issues.Where(i => i.IssueStatus == IssueStatus.Unassigned).ToList();
+                IssuesResolvedCreatedByMe = Issues.Where(i => i.IssueStatus == IssueStatus.Resolved && i.CreatorId == userId).ToList();
+                IssuesRecentlyModified = Issues.Where(i => ((DateTime.Now - i.ModifiedOn).TotalDays < 5)).ToList();
+            }
         }
     }
 }
