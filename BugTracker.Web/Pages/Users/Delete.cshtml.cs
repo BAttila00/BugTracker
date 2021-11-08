@@ -6,16 +6,19 @@ using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace BugTracker.Web.Pages.Users
 {
     public class DeleteModel : PageModel
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context)
+        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context, ILogger<DeleteModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -48,8 +51,10 @@ namespace BugTracker.Web.Pages.Users
 
             if (User != null)
             {
+                int userId = User.Id;
                 _context.Users.Remove(User);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("User with Id = {userId} deleted.", userId);
             }
 
             return RedirectToPage("./Index");

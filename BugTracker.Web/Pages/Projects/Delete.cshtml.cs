@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace BugTracker.Web.Pages.Projects
 {
     public class DeleteModel : PageModel
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
+        private readonly ILogger<DeleteModel> _logger;
 
-        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context)
+        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context, ILogger<DeleteModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -51,8 +54,10 @@ namespace BugTracker.Web.Pages.Projects
 
             if (Project != null)
             {
+                int projectId = Project.Id;
                 _context.Projects.Remove(Project);
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Project with Id = {projectId} deleted.", projectId);
             }
 
             return RedirectToPage("./Index");
