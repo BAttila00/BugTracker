@@ -11,15 +11,19 @@ using Microsoft.AspNetCore.Identity;
 using BugTracker.Web.SearchModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BugTracker.Dal.Dto;
+using Microsoft.Extensions.Logging;
 
 namespace BugTracker.Web.Pages.Issues {
     public class IndexModel : PageModel {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager) {
+        public IndexModel(BugTracker.Dal.BugTrackerDbContext context, UserManager<User> userManager, ILogger<IndexModel> logger) {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
+
         }
 
         public IList<Issue> Issue { get; set; }
@@ -32,6 +36,7 @@ namespace BugTracker.Web.Pages.Issues {
         public bool myIssues { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? pageNumber, int? pageSize, int? projectId) {
+            _logger.LogInformation("Issues page opened");
             ViewData["myIssues"] = myIssues;
             Issue = await _context.Issues
                 .Include(i => i.AssignedTo)
