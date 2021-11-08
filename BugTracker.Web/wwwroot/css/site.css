@@ -73,3 +73,7 @@ body {
 .fa-color-red {
     color: red;
 }
+
+.greeHover:hover{
+    background-color: green;
+}
