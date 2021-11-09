@@ -9,6 +9,7 @@ namespace BugTracker.Web.ViewComponents {
 
         public IViewComponentResult Invoke(int pageSize, int pageNumber, int numberOfElements, int numberOfPagesToShow) {
             return View(new PaginationOptions {
+                PageSize = pageSize,
                 PageNumber = pageNumber,
                 NumberOfElements = numberOfElements,
                 TotalPages = (int)Math.Ceiling((double)numberOfElements / (double)pageSize),
@@ -17,6 +18,7 @@ namespace BugTracker.Web.ViewComponents {
         }
 
         public class PaginationOptions {
+            public int PageSize { get; set; }
             public int NumberOfElements { get; set; }
             public int PageNumber { get; set; }
             public int TotalPages { get; set; }

@@ -6,68 +6,100 @@
     allRouteData.TryAdd("pageSize", String.Empty);
 }
 
-    <nav>
-        <ul class="pagination justify-content-center">
-            @* Első oldalra link (dupla nyilacska)*@
-            @if (Model.PageNumber > 1) {
-                allRouteData["pageNumber"] = "1";
-                <li class="page-item">
-                    @* https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/built-in/anchor-tag-helper?view=aspnetcore-5.0#asp-all-route-data *@
-                    <a asp-all-route-data="@allRouteData" class="page-link">
-                        <span>&lArr;</span>                                 @*character szimbólum kódok: https://oinam.github.io/entities/*@
-                    </a>
+<nav>
+    <ul class="pagination justify-content-center">
+        @* Első oldalra link (dupla nyilacska)*@
+        @if (Model.PageNumber > 1) {
+            allRouteData["pageNumber"] = "1";
+            <li class="page-item">
+                @* https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/built-in/anchor-tag-helper?view=aspnetcore-5.0#asp-all-route-data *@
+                <a asp-all-route-data="@allRouteData" class="page-link">
+                    <span>&lArr;</span>                                 @*character szimbólum kódok: https://oinam.github.io/entities/*@
+                </a>
+            </li>
+        }
+        @* Elözö oldalra link (szimpla nyilacska)*@
+        @if (Model.PageNumber > 1) {
+            allRouteData["pageNumber"] = ((Model.PageNumber) - 1).ToString();
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">
+                    <span>&larr;</span>
+                </a>
+            </li>
+        }
+        @* Középső részen megjelenő linkek (oldal számok)*@
+        @for (var pageNumber = Math.Max(1, Model.PageNumber - Model.NumberOfPagesToShow); pageNumber <= Math.Min(Model.TotalPages, Model.PageNumber + Model.NumberOfPagesToShow); pageNumber++) {
+            @if (Model.PageNumber == pageNumber) {
+                <li class="page-item active">
+                    <a class="page-link">@pageNumber</a>
                 </li>
             }
-            @* Elözö oldalra link (szimpla nyilacska)*@
-            @if (Model.PageNumber > 1) {
-                allRouteData["pageNumber"] = ((Model.PageNumber) - 1).ToString();
+            else {
+                allRouteData["pageNumber"] = pageNumber.ToString();
                 <li class="page-item">
-                    <a asp-all-route-data="@allRouteData" class="page-link">
-                        <span>&larr;</span>
-                    </a>
+                    <a asp-all-route-data="@allRouteData" class="page-link">@pageNumber</a>
                 </li>
             }
-            @* Középső részen megjelenő linkek (oldal számok)*@
-            @for (var pageNumber = Math.Max(1, Model.PageNumber - Model.NumberOfPagesToShow); pageNumber <= Math.Min(Model.TotalPages, Model.PageNumber + Model.NumberOfPagesToShow); pageNumber++) {
-                @if (Model.PageNumber == pageNumber) {
-                    <li class="page-item active">
-                        <a class="page-link">@pageNumber</a>
-                    </li>
-                }
-                else {
-                    allRouteData["pageNumber"] = pageNumber.ToString();
-                    <li class="page-item">
-                        <a asp-all-route-data="@allRouteData" class="page-link">@pageNumber</a>
-                    </li>
-                }
-            }
-            @* Következö oldalra link (szimpla nyilacska)*@
-            @if (Model.PageNumber < Model.TotalPages) {
-                allRouteData["pageNumber"] = ((Model.PageNumber) + 1).ToString();
-                <li class="page-item">
-                    <a asp-all-route-data="@allRouteData" class="page-link">
-                        <span>&rarr;</span>
-                    </a>
-                </li>
-            }
-            @* Utolsó oldalra link (dupla nyilacska)*@
-            @if (Model.PageNumber < Model.TotalPages) {
-                allRouteData["pageNumber"] = Model.TotalPages.ToString();
-                <li class="page-item">
-                    <a asp-all-route-data="@allRouteData" class="page-link">
-                        <span>&rArr;</span>
-                    </a>
-                </li>
-            }
-        </ul>
-    </nav>
-    <div>
-        <p>Number of elements shown:&nbsp;</p>
-        @{allRouteData["pageNumber"] = "1";
-            allRouteData["pageSize"] = "2"; }
-        <a asp-all-route-data="@allRouteData">2&nbsp;&nbsp;</a>
-        @{allRouteData["pageSize"] = "3"; }
-    <a asp-all-route-data="@allRouteData">3&nbsp;&nbsp;</a>
-        @{allRouteData["pageSize"] = "50"; }
-        <a asp-all-route-data="@allRouteData">50</a>
-    </div>
+        }
+        @* Következö oldalra link (szimpla nyilacska)*@
+        @if (Model.PageNumber < Model.TotalPages) {
+            allRouteData["pageNumber"] = ((Model.PageNumber) + 1).ToString();
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">
+                    <span>&rarr;</span>
+                </a>
+            </li>
+        }
+        @* Utolsó oldalra link (dupla nyilacska)*@
+        @if (Model.PageNumber < Model.TotalPages) {
+            allRouteData["pageNumber"] = Model.TotalPages.ToString();
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">
+                    <span>&rArr;</span>
+                </a>
+            </li>
+        }
+    </ul>
+</nav>
+<div class="d-flex">
+    <p class="mx-2"><strong>Number of elements shown:</strong>&nbsp;</p>
+    <ul class="pagination justify-content-center">
+        @{allRouteData["pageNumber"] = "1"; }
+        @if (Model.PageSize == 2) {
+            allRouteData["pageSize"] = "2";
+            <li class="page-item active">
+                <a asp-all-route-data="@allRouteData" class="page-link">2</a>
+            </li>
+        }
+        else {
+            allRouteData["pageSize"] = "2";
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">2</a>
+            </li>
+        }
+        @if (Model.PageSize == 3) {
+            allRouteData["pageSize"] = "3";
+            <li class="page-item active">
+                <a asp-all-route-data="@allRouteData" class="page-link">3</a>
+            </li>
+        }
+        else {
+            allRouteData["pageSize"] = "3";
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">3</a>
+            </li>
+        }
+        @if (Model.PageSize > 3) {
+            allRouteData["pageSize"] = "50";
+            <li class="page-item active">
+                <a asp-all-route-data="@allRouteData" class="page-link">50</a>
+            </li>
+        }
+        else {
+            allRouteData["pageSize"] = "50";
+            <li class="page-item">
+                <a asp-all-route-data="@allRouteData" class="page-link">50</a>
+            </li>
+        }
+    </ul>
+</div>
