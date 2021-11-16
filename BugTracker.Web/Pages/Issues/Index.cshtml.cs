@@ -77,11 +77,11 @@ namespace BugTracker.Web.Pages.Issues {
             pageNumber ??= 1;
             int pageNumberNotNull = pageNumber.Value;
 
-            pageSize??= 1;
+            pageSize??= 5;
             int pageSizeNotNull = Math.Min(pageSize.Value, 50);
             int numberOfElements = Issue.Count();
             Issue = Issue.Skip((pageNumberNotNull - 1) * pageSizeNotNull).Take(pageSizeNotNull).ToList();
-            if (numberOfElements <= pageSizeNotNull) pageSizeNotNull = numberOfElements;
+            //if (numberOfElements <= pageSizeNotNull) pageSizeNotNull = numberOfElements;
             PaginationContainer = new PaginationContainer<Issue> {
                 NumberOfElements = numberOfElements,
                 PageNumber = pageNumberNotNull,

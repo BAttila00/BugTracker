@@ -65,31 +65,31 @@
     <p class="mx-2"><strong>Number of elements shown:</strong>&nbsp;</p>
     <ul class="pagination justify-content-center">
         @{allRouteData["pageNumber"] = "1"; }
-        @if (Model.PageSize == 2) {
-            allRouteData["pageSize"] = "2";
+        @if (Model.PageSize == 5) {
+            allRouteData["pageSize"] = "5";
             <li class="page-item active">
-                <a asp-all-route-data="@allRouteData" class="page-link">2</a>
+                <a asp-all-route-data="@allRouteData" class="page-link">5</a>
             </li>
         }
         else {
-            allRouteData["pageSize"] = "2";
+            allRouteData["pageSize"] = "5";
             <li class="page-item">
-                <a asp-all-route-data="@allRouteData" class="page-link">2</a>
+                <a asp-all-route-data="@allRouteData" class="page-link">5</a>
             </li>
         }
-        @if (Model.PageSize == 3) {
-            allRouteData["pageSize"] = "3";
+        @if (Model.PageSize == 10) {
+            allRouteData["pageSize"] = "10";
             <li class="page-item active">
-                <a asp-all-route-data="@allRouteData" class="page-link">3</a>
+                <a asp-all-route-data="@allRouteData" class="page-link">10</a>
             </li>
         }
         else {
-            allRouteData["pageSize"] = "3";
+            allRouteData["pageSize"] = "10";
             <li class="page-item">
-                <a asp-all-route-data="@allRouteData" class="page-link">3</a>
+                <a asp-all-route-data="@allRouteData" class="page-link">10</a>
             </li>
         }
-        @if (Model.PageSize > 3) {
+        @if (Model.PageSize == 50) {
             allRouteData["pageSize"] = "50";
             <li class="page-item active">
                 <a asp-all-route-data="@allRouteData" class="page-link">50</a>
