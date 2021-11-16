@@ -76,6 +76,8 @@ namespace BugTracker.Web.Pages.Issues
             Issue.ModifiedOn = DateTime.Now;
             if (Issue.IssueStatus == IssueStatus.Closed)
                 Issue.SolvedOn = DateTime.Now;
+            if (Issue.IssueStatus == IssueStatus.Unassigned)
+                Issue.AssignedToId = null;
 
             _context.Attach(Issue).State = EntityState.Modified;
 

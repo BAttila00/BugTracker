@@ -14,6 +14,7 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Issue.Id" />
+            <input type="hidden" asp-for="Issue.CreationDate" />
             <div class="form-group">
                 <label asp-for="Issue.Descreption" class="control-label"></label>
                 <input asp-for="Issue.Descreption" class="form-control" />
