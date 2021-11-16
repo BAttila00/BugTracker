@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
+
+@{
+    string IssueId = "";
+}
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">BugTracker.Web</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +58,12 @@
                         }
                     </ul>
                 </div>
+                @if (Context.User.Identity.IsAuthenticated) {
+                    <form class="d-flex" asp-page="/Index" asp-page-handler="IssueSearched">
+                        <input class="form-control me-2" type="search" placeholder="Issue ID" aria-label="Search" asp-for="@IssueId">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                }
             </div>
         </nav>
     </header>

@@ -45,5 +45,13 @@ namespace BugTracker.Web.Pages {
                 IssuesRecentlyModified = Issues.Where(i => ((DateTime.Now - i.ModifiedOn).TotalDays < 5)).ToList();
             }
         }
+
+        public IActionResult OnPostIssueSearched([FromForm] string IssueId) {
+            int numericValue;
+            bool isNumber = int.TryParse(IssueId, out numericValue);
+            if (isNumber)
+                return RedirectToPage("/Issues/Details", new { id = IssueId });
+            else return RedirectToPage("/Index");
+        }
     }
 }
