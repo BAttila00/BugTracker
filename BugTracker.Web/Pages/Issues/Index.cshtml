@@ -124,6 +124,9 @@
                         <thead>
                             <tr>
                                 <th>
+                                    @Html.DisplayNameFor(model => model.Issue[0].Id)
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.Issue[0].Descreption)
                                 </th>
                                 <th>
@@ -144,65 +147,44 @@
                                 <th>
                                     @Html.DisplayNameFor(model => model.Issue[0].IssuePriority)
                                 </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Issue[0].IssueSeverity)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Issue[0].ModifiedOn)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Issue[0].ModifiedBy)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Issue[0].SolvedOn)
-                                </th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var item in Model.PaginationContainer.Pages) {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Descreption)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Creator.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.IssueStatus)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreationDate)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Project.ProjectName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.IssuePriority)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.IssueSeverity)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ModifiedOn)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ModifiedBy.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.SolvedOn)
-                                    </td>
-                                    <td>
-                                        <div class="d-flex flex-row">
-                                            <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit mx-1" data-toggle="tooltip" data-placement="top" title="Edit..."></i></a>
-                                            <a asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info-circle mx-1" data-toggle="tooltip" data-placement="top" title="Details..."></i></a>
-                                            <a asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt mx-1 fa-color-red" data-toggle="tooltip" data-placement="top" title="Delete..."></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    <a asp-page="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Id)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descreption)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Creator.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IssueStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreationDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AssignedTo.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Project.ProjectName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IssuePriority)
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <a asp-page="./Edit" asp-route-id="@item.Id"><i class="fas fa-edit mx-1" data-toggle="tooltip" data-placement="top" title="Edit..."></i></a>
+                                        <a asp-page="./Details" asp-route-id="@item.Id"><i class="fas fa-info-circle mx-1" data-toggle="tooltip" data-placement="top" title="Details..."></i></a>
+                                        <a asp-page="./Delete" asp-route-id="@item.Id"><i class="far fa-trash-alt mx-1 fa-color-red" data-toggle="tooltip" data-placement="top" title="Delete..."></i></a>
+                                    </div>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
