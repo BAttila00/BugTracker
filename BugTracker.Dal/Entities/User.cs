@@ -26,5 +26,9 @@ namespace BugTracker.Dal.Entities {
 
         [InverseProperty("ModifiedBy")]
         public virtual ICollection<Project> ModifiedProjects { get; set; }
+        /*
+        private string userName;
+        public override string UserName { get { return userName + " asd"; } set { userName = value; } }
+        */
     }
 }

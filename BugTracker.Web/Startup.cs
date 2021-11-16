@@ -59,6 +59,8 @@ namespace BugTracker.Web {
 
             services.ConfigureApplicationCookie(options => {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
             });
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
