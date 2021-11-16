@@ -59,7 +59,7 @@ namespace BugTracker.Web.Pages.Issues {
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
             //Searching
             if (IssueSearch.Descreption != null)
-                Issue = Issue.Where(a => a.Descreption.ToLower().Equals(IssueSearch.Descreption.ToLower())).ToList();
+                Issue = Issue.Where(a => a.Descreption.ToLower().Contains(IssueSearch.Descreption.ToLower())).ToList();
             if (IssueSearch.AssignedToId != -1)
                 Issue = Issue.Where(a => a.AssignedToId == IssueSearch.AssignedToId).ToList();
             if (IssueSearch.ProjectId != -1)
