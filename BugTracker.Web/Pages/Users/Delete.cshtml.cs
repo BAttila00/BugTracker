@@ -48,6 +48,8 @@ namespace BugTracker.Web.Pages.Users
             }
 
             User = await _context.Users.FindAsync(id);
+            await DeleteUserFromConnectedIssues(id.Value);
+            await DeleteUserFromConnectedProjects(id.Value);
 
             if (User != null)
             {
@@ -58,6 +60,47 @@ namespace BugTracker.Web.Pages.Users
             }
 
             return RedirectToPage("./Index");
+        }
+
+        protected async Task DeleteUserFromConnectedIssues(int userId) {
+            IList<Issue> IssuesAssignedtoUser = await _context.Issues.Where(i => i.AssignedToId == userId)
+                .Include(i => i.AssignedTo).ToListAsync();
+            IList<Issue> IssuesCreatedByUser = await _context.Issues.Where(i => i.CreatorId == userId)
+                .Include(i => i.Creator).ToListAsync();
+            IList<Issue> IssuesModifiedByUser = await _context.Issues.Where(i => i.ModifiedById == userId)
+                .Include(i => i.ModifiedBy).ToListAsync();
+
+            foreach (var issue in IssuesAssignedtoUser) {
+                issue.AssignedToId = null;
+                issue.IssueStatus = IssueStatus.Unassigned;
+                _context.Attach(issue).State = EntityState.Modified;
+            }
+            foreach (var issue in IssuesCreatedByUser) {
+                issue.CreatorId = null;
+                _context.Attach(issue).State = EntityState.Modified;
+            }
+            foreach (var issue in IssuesModifiedByUser) {
+                issue.ModifiedById = null;
+                _context.Attach(issue).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        protected async Task DeleteUserFromConnectedProjects(int userId) {
+            IList<Project> ProjectsCreatedByUser = await _context.Projects.Where(p => p.CreatorId == userId)
+                .Include(p => p.Creator).ToListAsync();
+            IList<Project> ProjectsModifiedByUser = await _context.Projects.Where(p => p.ModifiedById == userId)
+                .Include(p => p.ModifiedBy).ToListAsync();
+
+            foreach (var project in ProjectsCreatedByUser) {
+                project.CreatorId = null;
+                _context.Attach(project).State = EntityState.Modified;
+            }
+            foreach (var project in ProjectsModifiedByUser) {
+                project.ModifiedById = null;
+                _context.Attach(project).State = EntityState.Modified;
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }
