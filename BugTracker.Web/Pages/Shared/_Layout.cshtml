@@ -60,7 +60,7 @@
                 </div>
                 @if (Context.User.Identity.IsAuthenticated) {
                     <form class="d-flex" asp-page="/Index" asp-page-handler="IssueSearched">
-                        <input class="form-control me-2" type="search" placeholder="Issue ID" aria-label="Search" asp-for="@IssueId">
+                        <input class="form-control mx-2" type="search" placeholder="Issue ID" aria-label="Search" asp-for="@IssueId">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 }
