@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
+using BugTracker.Dal.Dto;
 
 namespace BugTracker.Web.Pages.Issues
 {
@@ -24,8 +25,10 @@ namespace BugTracker.Web.Pages.Issues
             Comments = new List<Comment>();
         }
 
-        [BindProperty]
         public Issue Issue { get; set; }
+
+        [BindProperty]
+        public IssueDto IssueDto { get; set; }
 
         [BindProperty]
         public Comment NewComment { get; set; }
@@ -59,17 +62,44 @@ namespace BugTracker.Web.Pages.Issues
             ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
             ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
 
+            IssueDto = new IssueDto {
+                Descreption = Issue.Descreption,
+                IssuePriority = Issue.IssuePriority,
+                IssueSeverity = Issue.IssueSeverity,
+                IssueStatus = Issue.IssueStatus,
+                AssignedToId = Issue.AssignedToId,
+                ProjectId = Issue.ProjectId
+            };
+
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
+            string asd = IssueDto.Descreption;
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+
+            Issue = await _context.Issues
+                .Include(i => i.AssignedTo)
+                .Include(i => i.Creator)
+                .Include(i => i.ModifiedBy)
+                .Include(i => i.Project).FirstOrDefaultAsync(m => m.Id == id);
+
+            if (Issue == null) {
+                return NotFound();
+            }
+
+            Issue.Descreption = IssueDto.Descreption;
+            Issue.IssueStatus = IssueDto.IssueStatus;
+            Issue.IssuePriority = IssueDto.IssuePriority;
+            Issue.IssueSeverity = IssueDto.IssueSeverity;
+            Issue.ProjectId = IssueDto.ProjectId;
+            Issue.AssignedToId = IssueDto.AssignedToId;
 
             User applicationUser = await _userManager.GetUserAsync(User);
             Issue.ModifiedBy = applicationUser;
