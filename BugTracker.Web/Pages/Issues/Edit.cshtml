@@ -75,8 +75,8 @@
 </div>
 @if (User.Identity.IsAuthenticated) {
     <form asp-page-handler="PostComment">
-        <input type="hidden" asp-for="Issue.Id" />
-        <input type="hidden" asp-for="Issue.Descreption" />
+        <input type="hidden" asp-for="NewComment.IssueId" />
+        <input type="hidden" asp-for="IssueDto.Descreption" />
         <div class="d-flex">
             <div class="d-flex flex-column align-items-center flex-shrink-0 mr-3">
                 <span>@Model.UserName</span>

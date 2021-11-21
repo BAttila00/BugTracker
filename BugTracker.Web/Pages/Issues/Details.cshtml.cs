@@ -35,7 +35,9 @@ namespace BugTracker.Web.Pages.Issues
                 .Include(i => i.ModifiedBy)
                 .Include(i => i.Project).FirstOrDefaultAsync(m => m.Id == id);
 
-            Comments = _context.Comments.Where(c => c.IssueId == id).ToList();
+            Comments = _context.Comments.Where(c => c.IssueId == id)
+                .Include(c => c.User)
+                .ToList();
 
             if (Issue == null)
             {

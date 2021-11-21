@@ -43,8 +43,10 @@ namespace BugTracker.Web.Pages.Issues
                 return NotFound();
             }
 
-            Comments = _context.Comments.Where(c => c.IssueId == id).ToList();
-            NewComment = new Comment();
+            Comments = _context.Comments.Where(c => c.IssueId == id)
+                .Include(c => c.User)
+                .ToList();
+            NewComment = new Comment{ IssueId = id.Value};
             UserName = _userManager.GetUserName(User);
 
             Issue = await _context.Issues
@@ -76,9 +78,10 @@ namespace BugTracker.Web.Pages.Issues
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
+        // ----> Done
+
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            string asd = IssueDto.Descreption;
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -143,7 +146,6 @@ namespace BugTracker.Web.Pages.Issues
 
             string userId = _userManager.GetUserId(User);
             try {
-                NewComment.IssueId = Issue.Id;
                 NewComment.UserId = int.Parse(userId);
 
                 _context.Comments.Add(new Comment {
