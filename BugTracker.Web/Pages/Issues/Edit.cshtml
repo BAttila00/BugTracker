@@ -65,7 +65,12 @@
     @foreach (var comment in Model.Comments) {
         <div class="d-flex my-2">
             <div class="d-flex flex-column align-items-center flex-shrink-0 mr-3">
-                <span>@comment.User.UserName</span>
+                @if (comment.User != null) {
+                    <span>@comment.User.UserName</span>
+                }
+                else {
+                    <span>Deleted User</span>
+                }
                 <span class="text-secondary">@(comment.CreationDate.ToShortDateString())</span>
                 <span class="text-secondary">@(comment.CreationDate.ToShortTimeString())</span>
             </div>
