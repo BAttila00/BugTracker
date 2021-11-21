@@ -56,7 +56,7 @@ namespace BugTracker.Web.Pages.Projects {
             //    //return RedirectToPage("/Projects/Index", new { myProjects = true });
             //}
 
-            if ((!roles.Contains("Administrators") && !myProjects) || myProjects) {
+            if ((!(roles.Contains("Administrators") || roles.Contains("LeadDevelopers")) && !myProjects) || myProjects) {
                 var myProjectIds = ProjectUser.Where(p => p.UserId == applicationUser.Id).Select(p => p.ProjectId).Distinct().ToList();
                 Project = Project.Where(p => myProjectIds.Contains(p.Id)).ToList();
             }
