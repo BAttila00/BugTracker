@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BugTracker.Web.Pages.Issues
 {
@@ -22,12 +23,20 @@ namespace BugTracker.Web.Pages.Issues
             _userManager = userManager;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
-        ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
-        ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
-        ViewData["ProjectId"] = new SelectList(_context.Projects, "Id", "ProjectName");
+            ViewData["AssignedToId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["CreatorId"] = new SelectList(_context.Users, "Id", "UserName");
+            ViewData["ModifiedById"] = new SelectList(_context.Users, "Id", "UserName");
+            SelectList projectNames = new SelectList(_context.Projects, "Id", "ProjectName");
+
+            User applicationUser = await _userManager.GetUserAsync(User);
+            var roles = await _userManager.GetRolesAsync(applicationUser);
+            if (!(roles.Contains("Administrators") || roles.Contains("LeadDevelopers"))) {
+                List<Project> myProjects = await GetMyProjects();
+                projectNames = new SelectList(myProjects, "Id", "ProjectName");
+            }
+            ViewData["ProjectId"] = projectNames;
             return Page();
         }
 
@@ -54,6 +63,23 @@ namespace BugTracker.Web.Pages.Issues
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        protected async Task<List<Project>> GetMyProjects() {
+            var projects = await _context.Projects
+                .Include(p => p.Creator)
+                .Include(p => p.ModifiedBy).ToListAsync();
+
+            var projectUser = await _context.ProjectUsers
+                .Include(p => p.User)
+                .Include(p => p.Project).ToListAsync();
+
+            User applicationUser = await _userManager.GetUserAsync(User);
+
+            var myProjectIds = projectUser.Where(p => p.UserId == applicationUser.Id).Select(p => p.ProjectId).Distinct().ToList();
+            projects = projects.Where(p => myProjectIds.Contains(p.Id)).ToList();
+
+            return projects;
         }
     }
 }
