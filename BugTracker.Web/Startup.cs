@@ -39,6 +39,7 @@ namespace BugTracker.Web {
 
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));  //A MailSettings.cs fájlba felolvassa a appsettings.Development.json-ben a MailSettings section alatt beállított értékeket
             services.AddTransient<IEmailSender, Services.EmailSender>();
+            services.AddTransient<Services.IDbLogger, Services.DbLogger>();
 
             services.AddAuthorization(options => {
                 options.AddPolicy("RequireAdministratorOrLeadDeveloperRole", policy => policy.RequireRole(Roles.Administrators.ToString(), Roles.LeadDevelopers.ToString()));

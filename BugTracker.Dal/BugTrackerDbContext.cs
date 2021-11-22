@@ -21,6 +21,7 @@ namespace BugTracker.Dal {
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
         public virtual DbSet<Issue> Issues { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {

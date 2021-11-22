@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
 using Microsoft.Extensions.Logging;
+using BugTracker.Web.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace BugTracker.Web.Pages.Issues
 {
@@ -15,11 +18,15 @@ namespace BugTracker.Web.Pages.Issues
     {
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
         private readonly ILogger<DeleteModel> _logger;
+        private readonly IDbLogger _dbLogger;
+        private readonly UserManager<User> _userManager;
 
-        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context, ILogger<DeleteModel> logger)
+        public DeleteModel(BugTracker.Dal.BugTrackerDbContext context, ILogger<DeleteModel> logger, IDbLogger dbLogger, UserManager<User> userManager)
         {
             _context = context;
             _logger = logger;
+            _dbLogger = dbLogger;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -60,6 +67,10 @@ namespace BugTracker.Web.Pages.Issues
                 _context.Issues.Remove(Issue);
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Issue with Id = {issueId} deleted.", issueId);
+
+                User applicationUser = await _userManager.GetUserAsync(User);
+                var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                await _dbLogger.LogEvent(LogTypes.Deletion, userId, $"Issue with Id = {issueId} deleted.");
             }
 
             return RedirectToPage("./Index");
