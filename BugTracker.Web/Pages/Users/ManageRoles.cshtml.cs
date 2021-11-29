@@ -42,6 +42,7 @@ namespace BugTracker.Web.Pages.Users
                 return NotFound();
             }
 
+            //TODO: deletsection
             //hibát dob:
             //InvalidOperationException: There is already an open DataReader associated with this Connection which must be closed first.
             //megoldás lent

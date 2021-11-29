@@ -80,6 +80,8 @@ namespace BugTracker.Web {
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
