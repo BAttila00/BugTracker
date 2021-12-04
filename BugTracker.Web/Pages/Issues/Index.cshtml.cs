@@ -69,9 +69,9 @@ namespace BugTracker.Web.Pages.Issues {
             if (IssueSearch.IssueStatus != -1)
                 Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssueStatus).ToList();
             if (IssueSearch.IssueSeverity != -1)
-                Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssueSeverity).ToList();
+                Issue = Issue.Where(a => (int)a.IssueSeverity == IssueSearch.IssueSeverity).ToList();
             if (IssueSearch.IssuePriority != -1)
-                Issue = Issue.Where(a => (int)a.IssueStatus == IssueSearch.IssuePriority).ToList();
+                Issue = Issue.Where(a => (int)a.IssuePriority == IssueSearch.IssuePriority).ToList();
 
             //Lapozás
             pageNumber ??= 1;
