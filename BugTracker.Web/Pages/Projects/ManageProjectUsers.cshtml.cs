@@ -37,7 +37,8 @@ namespace BugTracker.Web.Pages.Projects
         /// <summary>
         /// All users
         /// </summary>
-        public IList<User> User { get; set; }
+        public IList<User> User { get; set; }       //Nem szerencsés elnevezés, mert elrejti a RazorPages-böl örökölt User property-t
+                                                    //ami pl ehhez kellene: User applicationUser = await _userManager.GetUserAsync(User);
 
         public ManageProjectUsersModel(BugTracker.Dal.BugTrackerDbContext context) {
             _context = context;

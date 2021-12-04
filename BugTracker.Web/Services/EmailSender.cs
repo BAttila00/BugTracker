@@ -13,7 +13,9 @@ namespace BugTracker.Web.Services {
     public class EmailSender : IEmailSender {
 
         private readonly MailSettings mailSettings;
-        public EmailSender(IOptions<MailSettings> mailSettings) {
+        public EmailSender(IOptions<MailSettings> mailSettings) {       //Startup-ban beállítottam, így:
+                                                                        //services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+                                                                        //ezért itt már egyszerüen lekérdezhetö az IOption-ök közül
             this.mailSettings = mailSettings.Value;
         }
 

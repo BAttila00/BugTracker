@@ -19,7 +19,8 @@ namespace BugTracker.Web.Pages.Users
 
         [BindProperty]
         public List<ManageUserRolesModel> UserRolesModels { get; set; }
-        public User User { get; set; }
+        public User User { get; set; }          //Nem szerencsés elnevezés, mert elrejti a RazorPages-böl örökölt User property-t
+                                                //ami pl ehhez kellene: User applicationUser = await _userManager.GetUserAsync(User);
 
         private readonly BugTracker.Dal.BugTrackerDbContext _context;
         private readonly UserManager<User> _userManager;

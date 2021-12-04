@@ -6,7 +6,6 @@ namespace BugTracker.Dal.UserRoles {
     public enum Roles {
         Developers,
         LeadDevelopers,
-        Administrators,
-        TestRole
+        Administrators
     }
 }

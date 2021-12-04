@@ -24,7 +24,8 @@ namespace BugTracker.Web.Pages.Users
             _userManager = userManager;
         }
 
-        public IList<User> User { get;set; }
+        public IList<User> User { get;set; }        //Nem szerencsés elnevezés, mert elrejti a RazorPages-böl örökölt User property-t
+                                                    //ami pl ehhez kellene: User applicationUser = await _userManager.GetUserAsync(User);
         public PaginationContainer<User> PaginationContainer { get; set; }
 
         [BindProperty(SupportsGet = true)]
