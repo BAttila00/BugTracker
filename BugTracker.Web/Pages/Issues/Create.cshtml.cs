@@ -9,6 +9,7 @@ using BugTracker.Dal;
 using BugTracker.Dal.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BugTracker.Dal.Dto;
 
 namespace BugTracker.Web.Pages.Issues
 {
@@ -40,8 +41,10 @@ namespace BugTracker.Web.Pages.Issues
             return Page();
         }
 
-        [BindProperty]
         public Issue Issue { get; set; }
+
+        [BindProperty]
+        public IssueDto IssueDto { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -52,12 +55,21 @@ namespace BugTracker.Web.Pages.Issues
                 return Page();
             }
 
+            Issue = new Issue();
+
             User applicationUser = await _userManager.GetUserAsync(User);
             Issue.Creator = applicationUser;
             Issue.ModifiedBy = applicationUser;
             Issue.CreationDate = DateTime.Now;
             Issue.ModifiedOn = DateTime.Now;
             Issue.SolvedOn = null;
+
+            Issue.Descreption = IssueDto.Descreption;
+            Issue.IssueStatus = IssueDto.IssueStatus;
+            Issue.IssuePriority = IssueDto.IssuePriority;
+            Issue.IssueSeverity = IssueDto.IssueSeverity;
+            Issue.ProjectId = IssueDto.ProjectId;
+            Issue.AssignedToId = IssueDto.AssignedToId;
 
             _context.Issues.Add(Issue);
             await _context.SaveChangesAsync();

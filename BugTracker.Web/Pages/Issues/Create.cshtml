@@ -14,34 +14,34 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Issue.Descreption" class="control-label"></label>
-                <input asp-for="Issue.Descreption" class="form-control" />
-                <span asp-validation-for="Issue.Descreption" class="text-danger"></span>
+                <label asp-for="IssueDto.Descreption" class="control-label"></label>
+                <input asp-for="IssueDto.Descreption" class="form-control" />
+                <span asp-validation-for="IssueDto.Descreption" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Issue.IssueStatus" class="control-label"></label>
-                <select asp-for="Issue.IssueStatus" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueStatus>()"></select>
-                <span asp-validation-for="Issue.IssueStatus" class="text-danger"></span>
+                <label asp-for="IssueDto.IssueStatus" class="control-label"></label>
+                <select asp-for="IssueDto.IssueStatus" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueStatus>()"></select>
+                <span asp-validation-for="IssueDto.IssueStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Issue.AssignedToId" class="control-label"></label>
-                <select asp-for="Issue.AssignedToId" class="form-control" asp-items="ViewBag.AssignedToId">
+                <label asp-for="IssueDto.AssignedToId" class="control-label"></label>
+                <select asp-for="IssueDto.AssignedToId" class="form-control" asp-items="ViewBag.AssignedToId">
                     <option value="" selected>None</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="Issue.ProjectId" class="control-label"></label>
-                <select asp-for="Issue.ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
+                <label asp-for="IssueDto.ProjectId" class="control-label"></label>
+                <select asp-for="IssueDto.ProjectId" class ="form-control" asp-items="ViewBag.ProjectId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Issue.IssuePriority" class="control-label"></label>
-                <select asp-for="Issue.IssuePriority" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssuePriority>()"></select>
-                <span asp-validation-for="Issue.IssuePriority" class="text-danger"></span>
+                <label asp-for="IssueDto.IssuePriority" class="control-label"></label>
+                <select asp-for="IssueDto.IssuePriority" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssuePriority>()"></select>
+                <span asp-validation-for="IssueDto.IssuePriority" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Issue.IssueSeverity" class="control-label"></label>
-                <select asp-for="Issue.IssueSeverity" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueSeverity>()"></select>
-                <span asp-validation-for="Issue.IssueSeverity" class="text-danger"></span>
+                <label asp-for="IssueDto.IssueSeverity" class="control-label"></label>
+                <select asp-for="IssueDto.IssueSeverity" class="form-control" asp-items="Html.GetEnumSelectList<BugTracker.Dal.Entities.IssueSeverity>()"></select>
+                <span asp-validation-for="IssueDto.IssueSeverity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
