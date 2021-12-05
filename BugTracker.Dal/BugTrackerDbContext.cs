@@ -60,8 +60,8 @@ namespace BugTracker.Dal {
                     .HasConstraintName("FK_Comment_User");
             });
 
-            modelBuilder.ApplyConfiguration(new ProjectEntityConfiguration());
-            modelBuilder.ApplyConfiguration(new IssueEntityConfiguration());
+            //modelBuilder.ApplyConfiguration(new ProjectEntityConfiguration());
+            //modelBuilder.ApplyConfiguration(new IssueEntityConfiguration());
         }
     }
 }
