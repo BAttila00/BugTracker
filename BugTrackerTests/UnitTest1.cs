@@ -1,5 +1,10 @@
 using BugTracker.Dal;
 using BugTracker.Dal.Entities;
+using BugTracker.Web.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,6 +75,35 @@ namespace BugTrackerTests {
 
                 Assert.Equal(expectedIssues, actualIssues);
             }
+        }
+
+
+
+
+
+        [Fact]
+        public void DeleteIssue_RedirectCheck() {
+            Mock<UserManager<User>> _userManager;
+            Mock<IUserStore<User>> _userStore;
+            BugTracker.Web.Pages.Issues.DeleteModel _pageModel;
+            Mock<ILogger<BugTracker.Web.Pages.Issues.DeleteModel>> _logger;
+            Mock<IDbLogger> _dbLogger;
+
+            _userStore = new Mock<IUserStore<User>>();
+            _userManager = new Mock<UserManager<User>>(_userStore.Object, null, null, null, null, null, null, null, null);
+            _logger = new Mock<ILogger<BugTracker.Web.Pages.Issues.DeleteModel>>();
+            _dbLogger = new Mock<IDbLogger>();
+
+            using (var db = new BugTrackerDbContext(Utilities.UtilitiesClass.TestDbContextOptions())) {
+                _pageModel = new BugTracker.Web.Pages.Issues.DeleteModel(db, _logger.Object, _dbLogger.Object, _userManager.Object);
+                var result = _pageModel.OnPostAsync(1);
+
+                Assert.Equal(typeof(RedirectToPageResult), result.Result.GetType());
+
+                RedirectToPageResult redirect = result.Result as RedirectToPageResult;
+                Assert.Equal("./Index", redirect.PageName);
+            }
+
         }
     }
 }
